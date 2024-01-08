@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+   <head>
+      <title>JU & MI Registrierung</title>
+      <link rel="stylesheet" href="../jquery/jquery.timepicker.min.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="../bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- icons in nav-->
+      <script src="../dashboard/js/all.js" crossorigin="anonymous"></script>
+      <script src="../jquery/jquery-3.4.1.min.js"></script>
+      <link rel="stylesheet" href="../bootstrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+      <link href = "../jquery/jquery-ui-themes-1.13.2/jquery-ui.css" rel = "stylesheet">
+      <script src="../js/lottie_bodymovin/lottie.min.js"></script>
+      <style type="text/css">
+         .lottie-container {
+         justify-content: center;
+         top:  40px;
+         left:  0;
+         right:  0;
+         bottom:  20px;
+         height: 80px;
+         pointer-events: none;
+         }
+      </style>
+   </head>
+   <body>
+   <br>
+         <main>
+            <!--Anwendung-->
+            <script src="../js/components/selfregistration.js"></script>
+            <div class="lottie-container" id="lottie-container"></div>
+            <div class="container-fluid">
+               <div class="card">
+                  <div class="card-header">
+
+                       Melde dich zum Jugendchor an!
+                  </div>
+
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                           <div class="col-12 col-md-4">Vorname:</div>
+                           <div class="col-12 col-md-8"><input type="text" class="form-control" name="vorname" id="vorname" value="{$member_anlegen_vorname}" required></div>
+                        </div>
+                        <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                           <div class="col-12 col-md-4">Nachname:</div>
+                           <div class="col-12 col-md-8"><input type="text" class="form-control" name="nachname" id="nachname" value="{$member_anlegen_nachname}" required></div>
+                        </div>
+                        <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                           <div class="col-12 col-md-4">Mailadresse:</div>
+                           <div class="col-12 col-md-8"><input type="email" class="form-control" name="mail" id="mail" value="{$member_anlegen_mail}" required></div>
+                        </div>
+                        <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                           <div class="col-12 col-md-4">Ich bin 16 Jahre alt oder &auml;lter?</div>
+                           <div class="col-12 col-md-8">
+                             <div class="form-check">
+                               <input class="form-check-input" value="1" type="radio" name="alter16" id="alter16_ja">
+                               <label class="form-check-label" for="alter16_ja">Ja, ich bin 16 Jahre alt oder &auml;lter</label>
+                             </div>
+                             <div class="form-check">
+                               <input class="form-check-input" value="0" type="radio" name="alter16" id="alter16_no" checked>
+                               <label class="form-check-label" for="alter16_no">Nein, ich bin noch keine 16 Jahre alt</label>
+                             </div>
+                           </div>
+                        </div>
+                        <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                           <div class="col-12 col-md-4">Singstimme:</div>
+                           <div class="col-12 col-md-8">
+                              <select name="singstimme"class="form-control" id="singstimme">
+                                 <option value="1">Sopran</option>
+                                 <option value="2">Alt</option>
+                                 <option value="3">Tenor</option>
+                                 <option value="4">Bass</option>
+                                 <option value="5">Wei&szlig; ich nicht</option>
+                              </select>
+                           </div>
+                        <p align='center'>
+                           <button class="col-6 btn btn-primary btn-sm mt-3" id="save" onclick="membersave();">Speichern</button>
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <div id="msg"></div>
+               <div id="msg1"></div>
+            </div>
+                           <script type="text/javascript">
+			                  var item = bodymovin.loadAnimation({
+			                  wrapper: document.getElementById('lottie-container'),
+			                  animType: 'svg',
+			                  loop: true,
+			                  autoplay: true,
+			                  path: '../media/register.json'
+			                  });
+               </script>
+         </main>
+      </div>
+   </body>
+</html>

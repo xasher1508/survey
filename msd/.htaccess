@@ -1,0 +1,7 @@
+<IfModule mod_rewrite.c>
+RewriteEngine off
+</IfModule>
+AuthName "MyOOS-Dumper"
+AuthType Basic
+AuthUserFile "/var/www/web360/htdocs/survey/msd/.htpasswd"
+require valid-user

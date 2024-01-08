@@ -1,0 +1,88 @@
+{if $action == ''}
+<!DOCTYPE html>
+<html lang="de">
+   <head>
+     <title>JU & MI Passwort</title>
+      <link rel="stylesheet" href="../jquery/jquery-ui.css">
+      <link rel="stylesheet" href="../jquery/jquery.timepicker.min.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="../bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- nochmals bootstrap.css mit Erweiterungen vom Dashboard -->
+      <link href="css/styles.css" rel="stylesheet" />
+      <!-- icons in nav-->
+      <script src="js/all.js" crossorigin="anonymous"></script>
+      <script src="../jquery/jquery-3.4.1.min.js"></script>
+      <link rel="stylesheet" href="../bootstrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+      <script>
+         function keysave(ele) {
+         if(event.key === 'Enter') {
+         changepwd();
+         }
+         }
+      </script>
+
+   </head>
+   <body class="sb-nav-fixed">
+      <div id="navtop"></div>
+      {literal}
+      <script>
+         $(function(){
+           // im Navbar muss der toggle in der Callbackfunktion definiert werden. Sonst findet jquery getelementbyID nicht
+           $("#navtop").load('navtop.php', null, function(){$.getScript('js/scripts.js');});
+           $("#navleft").load("nav.php");
+           $("#footer").load("footer.php");
+         });
+      </script>
+      {/literal}
+      <div id="layoutSidenav">
+         <!-- Navigation left -->
+         <div id="navleft"></div>
+         <div id="layoutSidenav_content">
+            <main>
+            <!--Anwendung-->
+            <script src="../js/components/admin_changepwd.js"></script>
+
+            <div class="container-fluid">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-edit me-1"></i>
+                     Passwortwechsel
+                  </div>
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Altes Passwort:</div>
+                           <div class="col-12 col-md-8">
+                               <input type="password" id="password"  class="form-control rounded-right" required onkeydown="keysave(this)">
+                           </div>
+                        </div>
+
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Neues Passwort:</div>
+                           <div class="col-12 col-md-8">
+                               <input type="password" id="password_new1"  class="form-control rounded-right" required onkeydown="keysave(this)">
+                           </div>
+                        </div>
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Passwortwiederholung:</div>
+                           <div class="col-12 col-md-8">
+                               <input type="password" id="password_new2"  class="form-control rounded-right" required onkeydown="keysave(this)">
+                           </div>
+                        </div>
+                      </div>
+                      <p align='center'>
+                          <button class="col-6 btn btn-primary btn-sm mt-3" id="save" onclick="changepwd();">Speichern</button>
+                      </p>
+                  </div>
+               </div>
+            </div>
+            <div id="msg"></div>
+            </main>
+            <!-- footer -->
+            <div id="footer"></div>
+         </div>
+      </div>
+   </body>
+</html>
+{/if}

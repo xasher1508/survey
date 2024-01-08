@@ -1,0 +1,46 @@
+<div id="layoutSidenav_nav">
+   <nav class="bg-juandmi sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+      <div class="sb-sidenav-menu">
+         <div class="nav">
+            <!--<div class="sb-sidenav-menu-heading">Core</div>-->
+            <a class="nav-link" href="startseite.php">
+               <div class="sb-nav-link-icon"><i class="fas fa-house"></i></div>
+               Home
+            </a>
+            <div class="sb-sidenav-menu-heading">Umfrage</div>
+            <a class="nav-link" href="survey_erfassen.php?new=1">
+               <div class="sb-nav-link-icon"><i class="fas fa-pie-chart"></i></div>
+               Erstellen
+            </a>
+            <a class="nav-link" href="survey_edit.php?new=1">
+               <div class="sb-nav-link-icon"><i class="fas fa-edit"></i></div>
+               Bearbeiten
+            </a>
+            <div class="sb-sidenav-menu-heading">Administration</div>
+            <a class="nav-link" href="parameter.php">
+               <div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
+               Systemparameter
+            </a>
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+               <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+               Benutzerverwaltung
+               <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+               <nav class="sb-sidenav-menu-nested nav">
+                  <a class="nav-link" href="create_user.php">Benutzer erstellen</a>
+                  <!--<a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>-->
+               </nav>
+               <nav class="sb-sidenav-menu-nested nav">
+                  <a class="nav-link" href="edit_user.php">Benutzer bearbeiten</a>
+                  <!--<a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>-->
+               </nav>
+            </div>
+         </div>
+      </div>
+      <div class="bg-juandmi sb-sidenav-footer">
+         <div class="small">Eingeloggt als:</div>
+         {$nav_name}
+      </div>
+   </nav>
+</div>

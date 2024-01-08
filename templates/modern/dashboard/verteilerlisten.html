@@ -1,0 +1,165 @@
+{if $action == ''}
+<!doctype html>
+<html lang="de">
+   <head>
+      <title>JU & MI Verteilerlisten</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="../bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- nochmals bootstrap.css mit Erweiterungen vom Dashboard -->
+      <link href="css/styles.css" rel="stylesheet" />
+      <!-- icons in nav-->
+      <script src="js/all.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="../bootstrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+      <script src="../jquery/jquery-3.4.1.min.js"></script>
+      <!-- jQuery UI CSS
+         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+         -->
+      <script src="../jquery/jquery-ui.js"></script>
+      <style>
+         .btn-group > .btn{
+         margin-bottom:20px;
+         border-radius:20px !important;
+         }
+      </style>
+      <script type="text/javascript">
+         {literal}
+         function keysave(ele) {
+         if(event.key === 'Enter') {
+         verteilersave();
+         }
+         }
+         {/literal}
+      </script>
+      <style type="text/css">
+         .ui-sortable tr {
+         cursor:pointer;
+         }
+         .ui-sortable tr:hover {
+         background:rgba(244,251,17,0.45);
+         }
+      </style>
+<script>
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();
+});
+</script>
+   </head>
+   <!--<body onload="if(document.erfassen)document.erfassen.{$umfrageerf_focus}.focus();return false;">-->
+   <body class="sb-nav-fixed">
+      <div id="navtop"></div>
+      {literal}
+      <script>
+         $(function(){
+           // im Navbar muss der toggle in der Callbackfunktion definiert werden. Sonst findet jquery getelementbyID nicht
+           $("#navtop").load('navtop.php', null, function(){$.getScript('js/scripts.js');});
+           $("#navleft").load("nav.php");
+           $("#footer").load("footer.php");
+         });
+      </script>
+      {/literal}
+      <div id="layoutSidenav">
+      <!-- Navigation left -->
+      <div id="navleft"></div>
+      <div id="layoutSidenav_content">
+         <main>
+            <!--Anwendung-->
+            <script src="../js/components/admin_verteilerlisten.js"></script>
+            <div class="container-fluid">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-table me-1"></i>
+                     Verteilerlisten
+                  </div>
+                  <div class="row mt-1 mt-sm-1 mb-1 mb-sm-1">
+                     <div class="col col-md-4">Verteilerliste:</div>
+                     <div class="col-8 col-md-8"><input class="form-control" type="text" name="verteilername" id="verteilername" size="60" onkeydown="keysave(this)"></div>
+                  </div>
+               </div>
+               <div class="row">
+                  <p align="right"
+                  <button class="btn btn-primary btn-sm mt-3" id="save" onclick="verteilersave();">Speichern</button>
+                  </p>
+               </div>
+               <br>
+               <br>
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-table me-1"></i>
+                     Vorhandene Verteiler
+                  </div>
+                  <div class="card-body">
+                     <div class="row mt-0 mt-sm-1 mb-0 mb-sm-1">
+                        <div class="row mt-0 mb-0">
+                           <div class="d-none col-md-7 d-md-block"><b>Liste</b></div>
+                           <div class="d-none col-md-5 d-md-block text-end"><b>Aktion</b></div>
+                        </div>
+                        {section name=table_data loop=$table_data}
+                        <div class="row mt-0 mt-sm-1 mb-0 mb-sm-1 ml-0 mr-0">
+                           <div class="col-8 col-md-7">{$table_data[table_data].bezeichnung}</div>
+                           <div class="col-4 col-md-5 text-end">
+                              <button class="btn btn-success btn-rounded btn-icon btn-sm" data-bs-toggle="modal" value="{$table_data[table_data].mvid}|verteileruserzuordnung.php" onclick="ShowZuordnung(this)" data-bs-target="#ZuordnungModal"><i class="fa fa-user" style="width:18px;"></i></button>
+                              <button class="btn btn-danger  btn-rounded btn-icon btn-sm" onclick="delVerteiler({$table_data[table_data].mvid})"><i class="fa fa-trash" style="width:18px;"></i></button>
+                           </div>
+                        </div>
+                        {/section}
+                        <!-- Modal -->
+                        <div class="modal" id="ZuordnungModal" tabindex="-1" aria-labelledby="ZuordnungModalLabel" aria-hidden="true">
+                           <div class="modal-dialog modal-xl">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <!--<h5 class="modal-title" id="ZuordnungModalLabel">Rollenübersicht</h5>-->
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                 </div>
+                                 <div class="modal-body">
+                                 </div>
+                                 <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Lösen Sie das Modal mit einem Button aus -->
+                        {literal}
+                        <script>
+                           function ShowZuordnung(a){
+                            let receive = a.getAttribute("value");
+                            var a = receive.split('|');
+                            var value = a[0];
+                            var file = a[1];
+
+                                $( '.modal-body' ).load( file+'?edit='+value , function () {
+                                   $( '#ZuordnungModal' ).modal({show: true });
+                               });
+                           }
+                        </script>
+                        {/literal}
+                     </div>
+                  </div>
+               </div>
+               <div id="msg"></div>
+         </main>
+<!--
+  <button type="button" class="btn btn-primary" data-bs-toggle="popover" title="Popover Header" data-bs-content="Some content inside the popover">
+    Toggle popover
+  </button>
+-->
+         <!-- footer -->
+         <div id="footer"></div>
+         </div>
+      </div>
+<!--
+<script>
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl)
+})
+</script>
+-->
+   </body>
+</html>
+{/if}
+
+

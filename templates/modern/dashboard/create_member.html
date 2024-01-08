@@ -1,0 +1,221 @@
+{if $action == ''}
+<!DOCTYPE html>
+<html lang="de">
+   <head>
+                        {if $create_edit == ''}
+                             <title>JU & MI S&auml;ngerIn erfassen</title>
+                        {else}
+                             <title>JU & MI S&auml;ngerIn bearbeiten</title>
+                        {/if}
+      <link rel="stylesheet" href="../jquery/jquery.timepicker.min.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="../bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- nochmals bootstrap.css mit Erweiterungen vom Dashboard -->
+      <link href="css/styles.css" rel="stylesheet" />
+      <!-- icons in nav-->
+      <script src="js/all.js" crossorigin="anonymous"></script>
+      <script src="../jquery/jquery-3.4.1.min.js"></script>
+      <link rel="stylesheet" href="../bootstrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+      <script type="text/javascript" src="../js/file_upload/vpb_uploader_member.js"></script>
+      <script type="text/javascript">$(document).ready(function()
+         {
+         	// Call the main function
+         	new vpb_multiple_file_uploader
+         	({
+         		vpb_form_id: "form_id", // Form ID
+         		autoSubmit: true,
+         		vpb_server_url: "../controller/admin_memberupload.php"
+         	});
+         });
+      </script>
+      <link href = "../jquery/jquery-ui-themes-1.13.2/jquery-ui.css" rel = "stylesheet">
+   </head>
+   <body class="sb-nav-fixed">
+      <div id="navtop"></div>
+      {literal}
+      <script>
+         $(function(){
+           // im Navbar muss der toggle in der Callbackfunktion definiert werden. Sonst findet jquery getelementbyID nicht
+           $("#navtop").load('navtop.php', null, function(){$.getScript('js/scripts.js');});
+           $("#navleft").load("nav.php");
+           $("#footer").load("footer.php");
+         });
+      </script>
+      {/literal}
+      <div id="layoutSidenav">
+      <!-- Navigation left -->
+      <div id="navleft"></div>
+      <div id="layoutSidenav_content">
+         <main>
+            <div class="container-fluid">
+            <form name="form_id" id="form_id" action="javascript:void(0);" enctype="multipart/form-data">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fa-solid fa-user"></i>
+                     {if $create_edit == ''}
+                       S&auml;ngerIn erfassen
+                     {else}
+                       S&auml;ngerIn bearbeiten
+                     {/if}
+                  </div>
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                           <div class="col-12 col-md-4">Vorname:</div>
+                           <div class="col-12 col-md-8"><input type="text" class="form-control" name="vorname" id="vorname" value="{$member_anlegen_vorname}"></div>
+                        </div>
+                        <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                           <div class="col-12 col-md-4">Nachname:</div>
+                           <div class="col-12 col-md-8"><input type="text" class="form-control" name="nachname" id="nachname" value="{$member_anlegen_nachname}"></div>
+                        </div>
+                        <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                           <div class="col-12 col-md-4">Mailadresse:</div>
+                           <div class="col-12 col-md-8">
+                             <input type="email" class="form-control" name="mail" id="mail" value="{$member_anlegen_mail}" onkeyup="checkUser()">
+                             <div id="mailmsg"></div>
+                           </div>
+
+                        </div>
+                        <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                           <div class="col-12 col-md-4">Singstimme:</div>
+                           <div class="col-12 col-md-8">
+                              <select name="singstimme"class="form-control" id="singstimme">
+                                 <option value="1" {if $member_anlegen_singstimme == 1} selected {/if}>Sopran</option>
+                                 <option value="2" {if $member_anlegen_singstimme == 2} selected {/if}>Alt</option>
+                                 <option value="3" {if $member_anlegen_singstimme == 3} selected {/if}>Tenor</option>
+                                 <option value="4" {if $member_anlegen_singstimme == 4} selected {/if}>Bass</option>
+                                 <option value="5" {if $member_anlegen_singstimme == 5} selected {/if}>Unbekannt</option>
+                              </select>
+                           </div>
+                        <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                           <div class="col-12 col-md-4">Einwilligungserkl&auml;rung:</div>
+                           <div class="col-12 col-md-8">
+                             <label><input type="checkbox" name="einw_livestream" id="einw_livestream" onclick="erf_einw('einw_livestream', {$create_edit});" value="1" {if $member_anlegen_einw_livestream == '1'} checked {/if}> Livestream </label><br>
+                             <label><input type="checkbox" name="einw_homepage" id="einw_homepage" onclick="erf_einw('einw_homepage', {$create_edit});" value="1" {if $member_anlegen_einw_homepage == '1'} checked {/if}> Homepage </label><br>
+                             <label><input type="checkbox" name="einw_socialmedia" id="einw_socialmedia" onclick="erf_einw('einw_socialmedia', {$create_edit});" value="1" {if $member_anlegen_einw_socialmedia == '1'} checked {/if}> Social Media</label>
+                           </div>
+                        </div>
+                        <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                           <div class="col-12 col-md-4">Mind. 16 Jahre alt oder &auml;lter?</div>
+                           <div class="col-12 col-md-8">
+                             <div class="form-check">
+                               <input class="form-check-input" value="1" type="radio" name="alter16" id="alter16_ja" onclick="erf_alter({$create_edit});" {if $member_anlegen_alter16 == '1'} checked {/if}>
+                               <label class="form-check-label" for="alter16_ja">16 Jahre alt oder &auml;lter</label>
+                             </div>
+                             <div class="form-check">
+                               <input class="form-check-input" value="0" type="radio" name="alter16" id="alter16_no" onclick="erf_alter({$create_edit});" {if $member_anlegen_alter16 == '0' or $member_anlegen_alter16 == ''} checked {/if}>
+                               <label class="form-check-label" for="alter16_no">Unter 16 Jahre</label>
+                             </div>
+                           </div>
+                        </div>
+                           <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                              <div class="col-12 col-md-4">Bemerkung:</div>
+                              <div class="col-12 col-md-8">
+                                 <div class="form-group">
+                                    <textarea id="bemerkung">{$member_anlegen_bemerkung}</textarea>
+                                 </div>
+                              </div>
+                           </div>
+                           {if $create_edit != ''}
+                           <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                              <div class="col-12 col-md-4">Registrierungsdatum:</div>
+                              <div class="col-12 col-md-8">
+                                    {$member_anlegen_selfreg_date_form}
+                              </div>
+                           </div>
+
+                           <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                              <div class="col-12 col-md-4">Dateien:</div>
+                              <div class="col-12 col-md-8">
+                                 <div class="form-group">
+                                   <table class="table table-striped table-bordered" id="curdoks">
+                                      <thead>
+                                         <tr>
+                                            <th style="color:blue; text-align:center;">Datei</th>
+                                            <th style="color:blue; text-align:center;">Uploaddatum</th>
+                                            {if $admin_rolle == 1}
+                                            <th style="color:blue; text-align:center;">Aktion</th>
+                                            {/if}
+                                         <tr>
+                                      </thead>
+                                      <tbody>
+                                        {section name=table_data loop=$table_data}
+                                        <tr>
+                                          <td>
+                                          {if $table_data[table_data].file_exists == 1}
+                                            <a href="{$table_data[table_data].filename}" target="_new">{$table_data[table_data].originalname}</a>
+                                          {else}
+                                            {$table_data[table_data].originalname}
+                                          {/if}
+                                          </td>
+                                          <td>{$table_data[table_data].uploaddatum}</td>
+                                          {if $admin_rolle == 1}
+                                          <td><a class="btn btn-danger  btn-rounded btn-icon btn-sm" onclick="delMemberFile({$table_data[table_data].id})"><i class="fa fa-trash" style="width:18px;"></i></a></td>
+                                          {/if}
+                                        </tr>
+                                        {/section}
+                                      </tbody>
+                                   </table>
+                                 </div>
+                              </div>
+                           </div>
+                           {/if}
+                           <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                              <label for="formFile" class="form-label">
+                                 <div class="col-12 col-md-4">PDF:</div>
+                                 <div class="col-12col-md-8">
+                                    <input class="form-control" type="file" name="vasplus_multiple_files" id="vasplus_multiple_files" multiple="multiple">
+                                 </div>
+                              </label>
+                           </div>
+                           <table class="table table-striped table-bordered" id="add_files">
+                              <thead>
+                                 <tr>
+                                    <th style="color:blue; text-align:center;">Datei</th>
+                                    <th style="color:blue; text-align:center;">Status</th>
+                                    <th style="color:blue; text-align:center;">Gr&ouml;&szlig;e</th>
+                                    <th style="color:blue; text-align:center;">Aktion</th>
+                                 <tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                           </table>
+                        </div>
+                        <p align='center'>
+                           {if $create_edit != ''}
+                             <input type="hidden" id="csid" value="{$create_edit}">
+                           {else}
+                              <input type="hidden" id="csid" value="-1">
+                           {/if}
+                           <button class="col-6 btn btn-primary btn-sm mt-3" id="save" onclick="membersave();">Speichern</button>
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <div id="msg"></div>
+               <div id="msg1"></div>
+               </form>
+            </div>
+         </main>
+         <!--
+            <script src="https://cdn.tiny.cloud/1/1rbpdpgs5ibxxotsljroj6rzz4t6v4akerjkdj7tuzdzlic6/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+            -->
+         <script src="../tinymce/js/tinymce/tinymce.min.js"></script>
+         <script>
+            tinymce.init({
+              selector: 'textarea#bemerkung',
+              height: 200,
+            //    skin: 'bootstrap',
+              plugins: 'lists, link',
+              toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link | removeformat help',
+              menubar: false,
+            });
+         </script>
+         <!-- footer -->
+         <div id="footer"></div>
+         </div>
+      </div>
+   </body>
+</html>
+{/if}

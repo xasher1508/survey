@@ -1,0 +1,335 @@
+{if $action == ''}
+<!doctype html>
+<html lang="de">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Umfrage</title>
+      <!-- https://www.budde-mediendesign.de/blog/programmierung/das-bootstrap-4-grid-system-->
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.ali.css" rel="stylesheet">
+      <!--
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+         -->
+      <style type="text/css">
+         body {
+         background-color	:	#FFF;
+         }
+         .headline {
+         padding-top: 10px;
+         padding-bottom: 10px;
+         padding-left: 20px;
+         }
+         .fill-5 {
+         animation: fill 2.5s linear 1;
+         }
+         @keyframes fill {
+         0% {
+         width: 0%;
+         }
+         100% {
+         width: 100%;
+         }
+         }
+         .progress-bar {
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         overflow: hidden;
+         color: var(--bs-progress-bar-color);
+         height: 5px;
+         text-align: center;
+         white-space: nowrap;
+         background-color: #0D7377;
+         transition: var(--bs-progress-bar-transition);
+         }
+         .lottie-container {
+         justify-content: center;
+         top:  20px;
+         left:  0;
+         right:  0;
+         bottom:  20px;
+         height: 300px;
+         pointer-events: none;
+         }
+      </style>
+      <script src="../js/lottie_bodymovin/lottie.min.js"></script>
+   </head>
+   <body>
+      <div class="container">
+         <div class="grid">
+            <div class="headline col-12 bg-white">
+               <div class="lottie-container" id="lottie-container"></div>
+               <script type="text/javascript">
+                  var item = bodymovin.loadAnimation({
+                  wrapper: document.getElementById('lottie-container'),
+                  animType: 'svg',
+                  loop: true,
+                  autoplay: true,
+                  path: '../media/data.json'
+                  });
+               </script>
+            </div>
+            <form action="?action=umfrage" method='post' name='start'>
+               {if $umfrage_anzeigen == '0'}
+               <div class="col-12 ">
+                  <h4>
+                     <p class="text-center">Aktuell sind keine Umfragen verfügbar</p>
+                  </h4>
+               </div>
+               {/if}
+               {if $umfrage_ende == '1'}
+               <div class="col-12 ">
+                  <h4>
+                     <p class="text-center">Herzlichen Dank für deine Teilnahme</p>
+                  </h4>
+               </div>
+               {/if}
+               {if $umfrage_anzeigen == '1' AND $umfrage_ende != '1'}
+               <div class="col-12 ">
+                  <h4>
+                     <p class="text-center">Umfrage wird geladen</p>
+                  </h4>
+               </div>
+               {/if}
+               {if $umfrage_anzeigen == '1' AND $umfrage_ende == 0}
+               <div class="progress" style="height: 5px;">
+                  <div class="progress-bar fill-5" role="progressbar"
+                     style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+                     aria-valuemax="100">
+                  </div>
+               </div>
+               <input type="hidden" name="umid" value="{$umfrage_umid}">
+               <script type="text/javascript">
+                  window.onload=function(){
+                      window.setTimeout(document.start.submit.bind(document.start), 2500);
+                  };
+               </script>
+            </form>
+            {/if}
+         </div>
+      </div>
+   </body>
+</html>
+{/if}
+{if $action == 'umfrage'}
+<!doctype html>
+<html lang="de">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Umfrage</title>
+      <!-- https://www.budde-mediendesign.de/blog/programmierung/das-bootstrap-4-grid-system-->
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.ali.css" rel="stylesheet">
+      <!--
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+         -->
+      <style type="text/css">
+         body {
+         background-color	:	#FFF;
+         }
+         .headline {
+         padding-top: 10px;
+         padding-bottom: 10px;
+         padding-left: 20px;
+         }
+         .question {
+         padding-top: 10px;
+         padding-bottom: 1px;
+         padding-left: 10px;
+         border-top-left-radius: 10px;
+         border-top-right-radius: 10px;
+         border-bottom-right-radius: 10px;
+         border-bottom-left-radius: 10px;
+         color: #FFF;
+         background-color: #35B6BB;
+         }
+         .answer {
+         padding-top: 20px;
+         padding-bottom: 20px;
+         padding-left: 20px;
+         }
+         .prog-col {
+         background-color: #35B6BB;
+         }
+         .btn-outline-primary{
+         --bs-btn-color: #0D7377;
+         --bs-btn-border-color: #0D7377;
+         --bs-btn-hover-color: #fff;
+         --bs-btn-hover-bg: #0D7377;
+         --bs-btn-hover-border-color: #0D7377;
+         --bs-btn-focus-shadow-rgb: 13, 110, 253;
+         --bs-btn-active-color: #fff;
+         --bs-btn-active-bg: #0D7377;
+         --bs-btn-active-border-color: #0D7377;
+         --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+         --bs-btn-disabled-color: #0D7377;
+         --bs-btn-disabled-bg: transparent;
+         --bs-btn-disabled-border-color: #0D7377;
+         --bs-gradient: none;
+         background-color: #F8F9F9;
+         }
+         .btn-group-vertical > .btn{
+         margin-bottom:20px;
+         border-radius:20px !important;
+         }
+         .btn-group > .btn{
+         margin-bottom:20px;
+         border-radius:20px !important;
+         }
+         .btn-primary {
+         --bs-btn-color: #fff;
+         --bs-btn-bg: #0D7377;
+         --bs-btn-border-color: #0D7377;
+         --bs-btn-hover-color: #fff;
+         --bs-btn-hover-bg: #35B6BB;
+         --bs-btn-hover-border-color: #0BA7AD;
+         --bs-btn-focus-shadow-rgb: 49, 132, 253;
+         --bs-btn-active-color: #fff;
+         --bs-btn-active-bg: #0BA7AD;
+         --bs-btn-active-border-color: #0a53be;
+         --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+         --bs-btn-disabled-color: #fff;
+         --bs-btn-disabled-bg: #0D7377;
+         --bs-btn-disabled-border-color: #0D7377;
+         }
+         .smaller{
+         font-size: 0.6em;
+         }
+      </style>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.9.1/lottie.min.js"></script>
+      <style type="text/css">
+         .lottie-container {
+         justify-content: center;
+         top:  20px;
+         left:  0;
+         right:  0;
+         bottom:  20px;
+         height: 300px;
+         pointer-events: none;
+         }
+      </style>
+   </head>
+   <body >
+      <!-- hier kommt der Inhalt der Seite hin -->
+      <div class="container">
+         {if $umfrage_showende != '1'}
+         <div class="progress"  style="height: 5px;">
+            <div class="progress-bar prog-col" role="progressbar" style="width:{$umfrage_progress}%" aria-valuenow="{$umfrage_progress}" aria-valuemin="0" aria-valuemax="100"></div>
+         </div>
+         <div class="grid">
+            <div class="headline col-12 bg-white">
+               <h2>
+                  <p class="text-center">{$umfrage_headline}</p>
+               </h2>
+            </div>
+            <form action="?action=umfrage" method='post' name='erfassen'>
+               {if $umfrage_showfreitext == '0'}
+               {section name=table_data loop=$table_data}
+               <div class="question col-12 ">
+                  <h4>
+                     <p class="text-center">{$table_data[table_data].frage}</p>
+                  </h4>
+                  {if $table_data[table_data].multiple == '1'}
+                  <p class="text-center small">Mehrfachantworten möglich</p>
+                  {/if}
+               </div>
+               <br>
+               <div class="col-12 btn-group-vertical btn-toolbar" role="group" aria-label="Basic radio toggle button group">
+                  {section name=inner loop=$table_data[table_data].inner}
+                  {if $table_data[table_data].multiple == '0'}
+                  <input value="{$table_data[table_data].inner[inner].uaid}" type="radio" class="btn-check" name="antwort" id="btnradio{$smarty.section.inner.rownum}" autocomplete="off" {if $table_data[table_data].inner[inner].selected == '1'} checked {/if}>
+                  {else}
+                  <input value="{$table_data[table_data].inner[inner].uaid}" type="checkbox" class="btn-check" name="antwort_{$table_data[table_data].inner[inner].uaid}" id="btnradio{$smarty.section.inner.rownum}" autocomplete="off" {if $table_data[table_data].inner[inner].selected == '1'} checked {/if}>
+                  {/if}
+                  <label class="answer btn btn-outline-primary" for="btnradio{$smarty.section.inner.rownum}">{$table_data[table_data].inner[inner].antwort}</label>
+                  {/section}
+               </div>
+               <div class="col-12 btn-group">
+                  <input type="hidden" name="row" value="{$pagination_row}">
+                  <input type="hidden" name="allcount" value="{$pagination_allcount}">
+                  {if $umfrage_start0 == '1'}
+                  <input type="submit" class="btn btn-light" name="but_prev" value="Zurück">
+                  {/if}
+                  {if $umfrage_start0 == '2'}
+                  <a disabled class="btn btn-light">Zurück</a>
+                  {/if}
+                  {if $umfrage_end0 == '1'}
+                  <input type="hidden" name="save" value="{$table_data[table_data].ufid}">
+                  <input type="hidden" name="exit" value="0">
+                  <input type="submit" class="btn btn-primary" name="but_next" value="Weiter">
+                  {/if}
+                  {if $umfrage_end0 == '2'}
+                  <input type="hidden" name="save" value="{$table_data[table_data].ufid}">
+                  <input type="hidden" name="exit" value="1">
+                  <input type="submit" class="btn btn-primary" name="but_next" value="Umfrage beenden">
+                  {/if}
+               </div>
+               {/section}
+               {/if}
+               {if $umfrage_showfreitext == '1'}
+               <div class="question col-12 ">
+                  <h4>
+                     <p class="text-center">{$umfrage_value_freitext_headline}</p>
+                  </h4>
+               </div>
+               <br>
+               <div class="col-12 btn-group-vertical btn-toolbar" role="group" aria-label="Basic radio toggle button group">
+                  <textarea class="form-control" id="freitext" name="freitext" rows="6">{$umfrage_value_freitext}</textarea>
+               </div>
+               <div class="col-12 btn-group">
+                  <input type="hidden" name="row" value="{$pagination_row}">
+                  <input type="hidden" name="allcount" value="{$pagination_allcount}">
+                  {if $umfrage_start0 == '1'}
+                  <input type="submit" class="btn btn-light" name="but_prev" value="Zurück">
+                  {/if}
+                  {if $umfrage_start0 == '2'}
+                  <a disabled class="btn btn-light">Zurück</a>
+                  {/if}
+                  {if $umfrage_end0 == '1'}
+                  <input type="hidden" name="save" value="freitext">
+                  <input type="hidden" name="exit" value="0">
+                  <input type="submit" class="btn btn-primary" name="but_next" value="Weiter">
+                  {/if}
+                  {if $umfrage_end0 == '2'}
+                  <input type="hidden" name="save" value="freitext">
+                  <input type="hidden" name="exit" value="1">
+                  <input type="submit" class="btn btn-primary" name="but_next" value="Umfrage beenden">
+                  {/if}
+               </div>
+               {/if}
+         </div>
+         </form>
+         {/if}
+         {if $umfrage_showende == '1'}
+         <div class="grid">
+            <div class="headline col-12 bg-white">
+               <div class="lottie-container" id="lottie-container"></div>
+               <script type="text/javascript">
+                  var item = bodymovin.loadAnimation({
+                  wrapper: document.getElementById('lottie-container'),
+                  animType: 'svg',
+                  loop: true,
+                  autoplay: true,
+                  path: '../media/data.json'
+                  });
+               </script>
+            </div>
+            <div class="col-12 ">
+               <h4>
+                  <p class="text-center">Herzlichen Dank für deine Teilnahme</p>
+               </h4>
+            </div>
+         </div>
+         {/if}
+      </div>
+      <!--
+         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+         -->
+      <script src="../jquery/jquery-3.4.1.min.js"></script>
+      <script src="../bootstrap/node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
+      <script src="../bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+   </body>
+</html>
+{/if}

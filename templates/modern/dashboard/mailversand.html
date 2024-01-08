@@ -1,0 +1,197 @@
+{if $action == ''}
+<!DOCTYPE html>
+<html lang="de">
+   <head>
+      <title>JU & MI Mailversand</title>
+      <!-- Latest compiled and minified CSS -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/i18n/defaults-*.min.js"></script>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="../bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- nochmals bootstrap.css mit Erweiterungen vom Dashboard -->
+      <link href="css/styles.css" rel="stylesheet" />
+      <!-- icons in nav-->
+      <script src="js/all.js" crossorigin="anonymous"></script>
+      <script src="../jquery/jquery-3.4.1.min.js"></script>
+      <link rel="stylesheet" href="../bootstrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+      <link href = "../jquery/jquery-ui-themes-1.13.2/jquery-ui.css" rel = "stylesheet">
+      <!-- SelectBox: https://github.com/snapappointments/bootstrap-select-->
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="../js/select/bootstrap-select.min.css">
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="../js/select/bootstrap-select.min.js"></script>
+      <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+      <script src="../js/select/defaults-de_DE.min.js"></script>
+      <style>
+         .bootstrap-select.invalid>.dropdown-toggle {
+         background: #fbf2f2;
+         }
+         .bootstrap-select>.dropdown-toggle {
+         border: #D2D2D2 1px solid;
+         }
+         #frmEnquiry div label {
+         margin-left: 5px
+         }
+         .InputBox:focus {
+         outline:none;
+         }
+         .error {
+         background-color: #FF6600;
+         border: #AA4502 1px solid;
+         padding: 5px 10px;
+         color: #FFFFFF;
+         border-radius: 4px;
+         }
+         .success {
+         background-color: #9fd2a1;
+         border: #91bf93 1px solid;
+         padding: 5px 10px;
+         color: #3d503d;
+         border-radius: 4px;
+         cursor: pointer;
+         font-size: 0.9em;
+         }
+         .info {
+         font-size: .8em;
+         color: #FF6600;
+         letter-spacing: 2px;
+         padding-left: 5px;
+         }
+         .btnAction {
+         background-color: #263327;
+         border: 0;
+         padding: 10px 40px;
+         color: #FFF;
+         border: #F0F0F0 1px solid;
+         border-radius: 4px;
+         cursor:pointer;
+         }
+         .btnAction:focus {
+         outline:none;
+         }
+         .invalid {
+         background: #fbf2f2;
+         background-color: #fbf2f2;
+         border: #e8e0e0 1px solid;
+         }
+      </style>
+   </head>
+   <body class="sb-nav-fixed">
+      <div id="navtop"></div>
+      {literal}
+      <script>
+         $(function(){
+           // im Navbar muss der toggle in der Callbackfunktion definiert werden. Sonst findet jquery getelementbyID nicht
+           $("#navtop").load('navtop.php', null, function(){$.getScript('js/scripts.js');});
+           $("#navleft").load("nav.php");
+           $("#footer").load("footer.php");
+         });
+      </script>
+      {/literal}
+      <div id="layoutSidenav">
+         <!-- Navigation left -->
+         <div id="navleft"></div>
+         <div id="layoutSidenav_content">
+            <main>
+               <!--Anwendung-->
+               <script src="../js/components/admin_phpmailer.js"></script>
+               <div class="container-fluid">
+                  <div class="card">
+                     <div class="card-header">
+                        <i class="fa fa-envelope"></i>
+                        Mailversand
+                     </div>
+                     <div class="card-body">
+                        <div id="mail-status"></div>
+                        <div class="row">
+                           <form id="frmEnquiry" action="" method="post" enctype='multipart/form-data'>
+                              <!--
+                                 <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                                    <div class="col-12">
+                                       <input type="text" name="userName" id="userName" class="form-control InputBox" placeholder="Name">
+                                    </div>
+                                 </div>
+                                 <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                                    <div class="col-12">
+                                       <input type="text" name="userEmail" id="userEmail" class="form-control InputBox" placeholder="Email">
+                                    </div>
+                                 </div>
+                                 -->
+                              <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                                 <div class="col-12">
+                                    <label>Empfängerkreis</label><br />
+                                    <select name="empfaenger[]"class="form-control InputBox selectpicker" id="empfaenger" multiple="multiple" data-live-search="true" onchange="showmail();">
+                                       <optgroup label="Systemintern">
+                                          {section name=table_data loop=$table_data}
+                                          <option value="S-{$table_data[table_data].rid}">{$table_data[table_data].bezeichnung}</option>
+                                          {/section}
+                                       </optgroup>
+                                       <optgroup label="Chor">
+                                          <option value="C-1">ChorsängerInnen</option>
+                                       </optgroup>
+                                       <optgroup label="Verteilerlisten">
+                                          {section name=table_data1 loop=$table_data1}
+                                          <option value="V-{$table_data1[table_data1].mvid}">{$table_data1[table_data1].bezeichnung}</option>
+                                          {/section}
+                                       </optgroup>
+                                       </optgroup>
+                                    </select>
+                                    <br>
+                                    <div id="empf"></div>
+                                    <input type="hidden" name="mailhidden" id="mailhidden">
+                                    <input type="hidden" name="komplett" id="komplett">
+                                 </div>
+                              </div>
+                              <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                                 <div class="col-12">
+                                    <input type="text" name="subject" id="subject" class="form-control InputBox" placeholder="Betreff">
+                                 </div>
+                              </div>
+                              <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                                 <div class="col-12">
+                                    <textarea name="content" id="content" class="form-control InputBox" placeholder="Mailtext"></textarea>
+                                 </div>
+                              </div>
+                              <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                                 <div class="col-12">
+                                    <label>Anhänge</label><br /><input type="file" name="attachment[]" class="form-control InputBox" multiple="multiple">
+                                 </div>
+                              </div>
+                              <p align='center'>
+                                 <input type="submit" class="col-6 btn btn-primary btn-sm mt-3" id="save" value="Senden">
+                              </p>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="msg"></div>
+                  </form>
+                  <!--
+                     <div id="loader-icon" style="display: none;">
+                         <img src="../media/LoaderIcon.gif" />
+                     </div>
+                     -->
+               </div>
+            </main>
+            <!--
+               <script src="https://cdn.tiny.cloud/1/1rbpdpgs5ibxxotsljroj6rzz4t6v4akerjkdj7tuzdzlic6/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+               -->
+            <script src="../tinymce/js/tinymce/tinymce.min.js"></script>
+            <script>
+               tinymce.init({
+                 selector: 'textarea#content',
+                 //newline_behavior: 'linebreak',
+                 height: 200,
+               //    skin: 'bootstrap',
+                 plugins: 'lists, link',
+                 toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link | removeformat help',
+                 menubar: false,
+               });
+            </script>
+            <!-- footer -->
+            <div id="footer"></div>
+         </div>
+      </div>
+   </body>
+</html>
+{/if}
+

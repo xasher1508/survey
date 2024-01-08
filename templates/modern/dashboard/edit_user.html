@@ -1,0 +1,140 @@
+{if $action == ''}
+<!DOCTYPE html>
+<html lang="de">
+   <head>
+     <title>JU & MI Benutzer bearbeiten</title>
+      <link rel="stylesheet" href="../jquery/jquery-ui.css">
+      <link rel="stylesheet" href="../jquery/jquery.timepicker.min.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="../bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- nochmals bootstrap.css mit Erweiterungen vom Dashboard -->
+      <link href="css/styles.css" rel="stylesheet" />
+      <!-- icons in nav-->
+
+      <!-- data Table: https://datatables.net/ -->
+      <script src="../jquery/jquery-3.4.1.min.js"></script>
+      <link href="../bootstrap/data-table/datatables.min.css" rel="stylesheet"/>
+	  <script src="../bootstrap/data-table/datatables.min.js"></script>
+      <script type="text/javascript" src="../bootstrap/data-table/moment.mon.js"></script>
+      <script type="text/javascript" src="../bootstrap/data-table/datetime-moment.js"></script>
+
+      <script src="js/all.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="../bootstrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+
+   </head>
+   <body class="sb-nav-fixed">
+      <div id="navtop"></div>
+      {literal}
+      <script>
+         $(function(){
+           // im Navbar muss der toggle in der Callbackfunktion definiert werden. Sonst findet jquery getelementbyID nicht
+           $("#navtop").load('navtop.php', null, function(){$.getScript('js/scripts.js');});
+           $("#navleft").load("nav.php");
+           $("#footer").load("footer.php");
+         });
+      </script>
+      {/literal}
+      <div id="layoutSidenav">
+         <!-- Navigation left -->
+         <div id="navleft"></div>
+         <div id="layoutSidenav_content">
+            <main>
+            <!--Anwendung-->
+            <script src="../js/components/admin_create_user.js"></script>
+
+            <div class="container-fluid">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-edit me-1"></i>
+                     Benutzer bearbeiten
+                     <div class="d-lg-none">
+					   <font color="red">Querformat für Mobilgeräte</font>
+					 </div>
+                  </div>
+                  <div class="card-body">
+
+
+<!-- https://datatables.net/download/release -->
+        <table id="tblDataTable" class="table table-striped table-hover table-bordered dataTable no-footer" cellpadding="0" border="0" role="grid" aria-describedby="tblDataTable_info">
+        <thead>
+          <tr>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th class="d-none d-md-table-cell"> Mail</th>
+            <th class="d-none d-md-table-cell">Letzte Aktivität</th>
+            <th class="d-none d-md-table-cell">Status</th>
+            <th>Aktion</th>
+          </tr>
+        </thead>
+        <tbody>
+        {section name=table_data loop=$table_data}
+          <tr>
+            <td>{$table_data[table_data].vorname}</td>
+            <td>{$table_data[table_data].nachname}</td>
+            <td class="d-none d-md-table-cell">{$table_data[table_data].mail}</td>
+            <td class="d-none d-md-table-cell">{$table_data[table_data].last_activity}</td>
+            <td class="d-none d-md-table-cell">
+        <!--
+        # 4 Neu
+        # 3 Deaktiviert
+        # 2 Inaktiv
+        # 1 Aktiv
+        -->
+            {if $table_data[table_data].status == '4'}
+              <span class="status text-secondary">&bull;</span> Neu
+            {/if}
+            {if $table_data[table_data].status == '3'}
+              <span class="status text-danger">&bull;</span> Deaktiviert
+            {/if}
+            {if $table_data[table_data].status == '2'}
+              <span class="status text-danger">&bull;</span> Inaktiv
+            {/if}
+            {if $table_data[table_data].status == '1'}
+              <span class="status text-success">&bull;</span> Aktiv
+            {/if}
+            </td>
+            <td>
+              <a href="create_user.php?edituid={$table_data[table_data].uid}" class="settings" title="Edit User" data-toggle="tooltip"><i class="fas fa fa-cog"></i></a>
+              &nbsp;
+              {if $table_data[table_data].aktiv == 1}
+                <a href="#" class="settings text-danger" id="disable" onclick="disableuser({$table_data[table_data].uid});" title="Lock User" data-toggle="tooltip"><i class="fas fa fa-lock"></i></a>
+              {else}
+                <a href="#" class="settings text-success" id="enable" onclick="enableuser({$table_data[table_data].uid});" title="Unlock User" data-toggle="tooltip"><i class="fas fa fa-unlock"></i></a>
+              {/if}
+            </td>
+          </tr>
+        {/section}
+        </tbody>
+      </table>
+
+
+                  </div>
+               </div>
+            </div>
+            <div id="msg"></div>
+            </main>
+            <!-- footer -->
+            <div id="footer"></div>
+         </div>
+      </div>
+   </body>
+   <script>
+      // Hinweise zur Sortierung nach Datum. <table Definition muss so übernommen werden. Keine Leerzeichen <td>datum</td>. Datumsfelder dürfen nicht leer sein und vom Format stimmig sein
+      $(document).ready(function () {
+
+      $('#tblDataTable').DataTable({
+          responsive: true,
+          fixedHeader: true,
+          pageLength: 10,
+          order: [[1, 'asc']],
+          language: {
+              url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/de-DE.json',
+           search: "",
+       lengthMenu:     "_MENU_ Zeilen",
+          },
+      });
+      });
+   </script>
+</html>
+{/if}

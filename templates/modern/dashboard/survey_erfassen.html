@@ -1,0 +1,388 @@
+{if $action == ''}
+<!DOCTYPE html>
+<html lang="de">
+   <head>
+      <title>JU & MI Umfragen erfassen</title>
+      <link rel="stylesheet" href="../jquery/jquery-ui.css">
+      <link rel="stylesheet" href="../jquery/jquery.timepicker.min.css">
+      <script src="../jquery/jquery-1.12.4.js"></script>
+      <script src="../jquery/jquery-ui.js"></script>
+      <script src="../jquery/globalize.js"></script>
+      <script src="../jquery/globalize.culture.de-DE.js"></script>
+      <script src="../jquery/jquery.mousewheel.js"></script>
+      <script src="../jquery/jquery.timepicker.min.js"></script>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="../bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- nochmals bootstrap.css mit Erweiterungen vom Dashboard -->
+      <link href="css/styles.css" rel="stylesheet" />
+      <!-- icons in nav-->
+      <script src="js/all.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="../bootstrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+      <style type="text/css">
+         .spinner {
+         width: 112px;
+         height: 15px;
+         font-size: 12px !important;
+         }
+         .btn-group > .btn{
+         margin-bottom:20px;
+         border-radius:20px !important;
+         }
+      </style>
+      <script>
+         $( function() {
+           $( ".spinner" ).spinner({
+           change: function (event, ui) {
+              <!--calc_erm_78();-->
+           },
+           spin: function (event, ui) {
+               <!--calc_erm_78();-->
+           },
+           start: function (event, ui) {
+            <!--calc_erm_78();-->
+         },
+         stop: function (event, ui) {
+            <!--calc_erm_78();-->
+         },
+             step: 1,
+             numberFormat: "i",
+             min:0,
+             decimals:0
+           });
+           Globalize.culture( "de-DE" );
+         } );
+
+            function trackKeys(evnt,regEx) {
+            	var keyCode = evnt.keyCode ? evnt.keyCode : evnt.which;
+          	return !!String.fromCharCode(keyCode).match(regEx);
+            }
+          //-->
+      </script>
+      <script type="text/javascript">
+         $(function() {
+             $(".datepicker").datepicker({
+             prevText: '&#x3c; zur&uuml;ck', prevStatus: '',
+             prevJumpText: '&#x3c;&#x3c;', prevJumpStatus: '',
+             changeMonth: true,
+             changeYear: true,
+             nextText: 'Vor &#x3e;', nextStatus: '',
+             nextJumpText: '&#x3e;&#x3e;', nextJumpStatus: '',
+             currentText: 'Heute', currentStatus: '',
+             todayText: 'Heute', todayStatus: '',
+             clearText: '-', clearStatus: '',
+             closeText: 'schlie&szlig;en', closeStatus: '',
+             monthNames: ['Januar','Februar','M&auml;rz','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+             monthNamesShort: ['Jan','Feb','M&auml;r','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
+             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
+             dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
+             dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
+             weekHeader: 'Wo',
+             weekStatus: 'Woche des Monats',
+             showMonthAfterYear: false,
+             showOn: 'focus',
+             firstDay: 1,
+             numberOfMonths : 1,
+             yearRange: "c-5:+5",
+             showButtonPanel : true,
+             altField : "#datepicker_input",
+             dateFormat : "dd.mm.yy",
+             showWeek: true
+             });
+             $.datepicker._gotoToday = function(id) {
+         $(id).datepicker('setDate', new Date()).datepicker('hide').blur();
+             }
+
+         });
+      </script>
+      <script type="text/javascript">
+         $(document).ready(function(){
+            $('input.timepicker').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '00:00',
+            maxTime: '23:00',
+            startTime: '0',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+            });
+         });
+      </script>
+   </head>
+   <body class="sb-nav-fixed">
+      <div id="navtop"></div>
+      {literal}
+      <script>
+         $(function(){
+           // im Navbar muss der toggle in der Callbackfunktion definiert werden. Sonst findet jquery getelementbyID nicht
+           $("#navtop").load('navtop.php', null, function(){$.getScript('js/scripts.js');});
+           $("#navleft").load("nav.php");
+           $("#footer").load("footer.php");
+         });
+      </script>
+      {/literal}
+      <div id="layoutSidenav">
+         <!-- Navigation left -->
+         <div id="navleft"></div>
+         <div id="layoutSidenav_content">
+            <main>
+               <form action="?action=fragen" method='post' name='erfassen'>
+                {if $umfrageerf_error == '1'}
+                  <div class="alert alert-warning" role="alert">
+                    {$umfrageerf_error_text}
+                  </div>
+                {/if}
+                  <div class="container-fluid">
+                     <div class="card">
+                        <div class="card-header">
+                           <i class="fas fa-pie-chart me-1"></i>
+                           Zeitraum der Umfrage und Bezeichnung
+                        </div>
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Link verfügbar ab Datum:</div>
+                           <div class="col-12 col-md-8"><input type="text" class="datepicker form-control" name="datumvon" id="datumvon" value="{$umfrageerf_value_datumvon}"></div>
+                        </div>
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Link verfügbar ab Uhrzeit:</div>
+                           <div class="col-12 col-md-8"><input type="text" class="timepicker form-control" name="zeitvon" id="zeitvon" value="{$umfrageerf_value_zeitvon}" onKeypress="return trackKeys(event,/[0-9,:]/);"></div>
+                        </div>
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Link verfügbar bis Datum:</div>
+                           <div class="col-12 col-md-8"><input type="text" class="datepicker form-control" name="datumbis" id="datumbis" value="{$umfrageerf_value_datumbis}"></div>
+                        </div>
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Link verfügbar bis Uhrzeit:</div>
+                           <div class="col-12 col-md-8"><input type="text" class="timepicker form-control" name="zeitbis" id="zeitbis" value="{$umfrageerf_value_zeitbis}" onKeypress="return trackKeys(event,/[0-9,:]/);"></div>
+                        </div>
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Headline der Umfrage:</div>
+                           <div class="col-12 col-md-8"><input class="form-control" type="text" name="headline" id="headline" value="{$umfrageerf_value_headline}" size="60"></div>
+                        </div>
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Freitextfeld am Ende der Umfrage:</div>
+                           <div class="col-12 col-md-8">
+                              <div class="form-check form-switch">
+                                 <input class="form-check-input" type="checkbox" name="freitext" id="freitext" value="{$umfrageerf_value_freitext}" {if $umfrageerf_value_freitext == 1} checked {/if}>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Überschrift der Freitextfrage:</div>
+                           <div class="col-12 col-md-8"><input class="form-control" type="text" name="freitext_headline" id="freitext_headline" value="{$umfrageerf_value_freitext_headline}" size="60"></div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-12 btn-group">
+                     <input type='submit' class="btn btn-primary mt-3" name='senden' value="Weiter - Fragen erfassen">
+                  </div>
+               </form>
+            </main>
+            <!-- footer -->
+            <div id="footer"></div>
+         </div>
+      </div>
+   </body>
+</html>
+{/if}
+{if $action == 'fragen'}
+<!doctype html>
+<html lang="de">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="../bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- nochmals bootstrap.css mit Erweiterungen vom Dashboard -->
+      <link href="css/styles.css" rel="stylesheet" />
+      <!-- icons in nav-->
+      <script src="js/all.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="../bootstrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+      <script src="../jquery/jquery-3.4.1.min.js"></script>
+      <!-- jQuery UI CSS
+         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+         -->
+      <script src="../jquery/jquery-ui.js"></script>
+      <style>
+         .btn-group > .btn{
+         margin-bottom:20px;
+         border-radius:20px !important;
+         }
+      </style>
+      <script type="text/javascript">
+         {literal}
+
+
+         function keysave(ele) {
+         if(event.key === 'Enter') {
+         erfassensave();
+         }
+         }
+
+         $(document).ready(function() {
+
+             //Helper function to keep table row from collapsing when being sorted
+         	var fixHelperModified = function(e, tr) {
+         		var $originals = tr.children();
+         		var $helper = tr.clone();
+         		$helper.children().each(function(index)
+         		{
+         		  $(this).width($originals.eq(index).width())
+         		});
+         		return $helper;
+         	};
+
+         	//Make diagnosis table sortable
+         	$("#sortable tbody").sortable({
+             	helper: fixHelperModified,
+         		stop: function(event,ui) {
+         		renumber_table('#sortable')
+                     			var order		=	$('#sortable tbody').sortable('toArray', { attribute: 'data-sort-id'});
+                     			console.log(order.join(','));
+                     			sortOrder	=	order.join(',');
+                     			$.post(
+                     				'../controller/reihenfolge.ajax.php',
+                     				{'action':'updateSortedRows','sortOrder':sortOrder},
+                     				function(data){
+                     					var a	=	data.split('|***|');
+                     					if(a[1]=="update"){
+                     					    $('#msg').show().delay(1000).fadeOut(500);
+                     						$('#msg').html(a[0]);
+                     					}
+                     				}
+                     			);
+
+         		}
+         	}).disableSelection();
+
+
+         });
+
+         //Renumber table rows
+         function renumber_table(tableID) {
+         	$(tableID + " tr").each(function() {
+         		count = $(this).parent().children().index($(this)) + 1;
+         		$(this).find('.priority').html(count);
+         	});
+         }
+
+         {/literal}
+      </script>
+      <style type="text/css">
+         .ui-sortable tr {
+         cursor:pointer;
+         }
+         .ui-sortable tr:hover {
+         background:rgba(244,251,17,0.45);
+         }
+      </style>
+   </head>
+   <!--<body onload="if(document.erfassen)document.erfassen.{$umfrageerf_focus}.focus();return false;">-->
+   <script type="text/javascript">
+           $(function() {
+            $("#{$umfrageerf_focus}").focus();
+        })
+   </script>
+
+   <body class="sb-nav-fixed">
+      <div id="navtop"></div>
+      {literal}
+      <script>
+         $(function(){
+           // im Navbar muss der toggle in der Callbackfunktion definiert werden. Sonst findet jquery getelementbyID nicht
+           $("#navtop").load('navtop.php', null, function(){$.getScript('js/scripts.js');});
+           $("#navleft").load("nav.php");
+           $("#footer").load("footer.php");
+         });
+      </script>
+      {/literal}
+      <div id="layoutSidenav">
+      <!-- Navigation left -->
+      <div id="navleft"></div>
+      <div id="layoutSidenav_content">
+         <main>
+            <!--Anwendung-->
+            <script src="../js/components/admin_erfassen.js"></script>
+            <div class="container-fluid">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-table me-1"></i>
+                     Frage & Antworten erfassen
+                  </div>
+                  <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                     <div class="col-12 col-md-4">Frage:</div>
+                     <div class="col-12 col-md-8"><input class="form-control" type="text" name="frage" id="frage" value="{$umfrageerf_value_frage}" size="60" onkeydown="keysave(this)"></div>
+                  </div>
+                  <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                     <div class="col-12 col-md-4">Antwort:</div>
+                     <div class="col-12 col-md-8"><input class="form-control" type="text" name="antwort" id="antwort" value="{$umfrageerf_value_antwort}" size="60" onkeydown="keysave(this)"></div>
+                  </div>
+                  <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                     <div class="col-12 col-md-4">Mehrfachantworten erlauben:</div>
+                     <div class="col-12 col-md-8"><input class="form-check-input" type="checkbox" name="multiple" id="multiple" value="1" onclick="erf_multiple();" {if $umfrageerf_value_multiple == 1} checked {/if}></div>
+                  </div>
+               </div>
+               <p align='center'>
+               <div class="col-12">
+                  <a type="submit" href="?" class="btn btn-light btn-sm mt-3">Zurück</a>
+                  <button class="btn btn-primary btn-sm mt-3" id="save" onclick="erfassensave();">Speichern</button>
+               </div>
+               </p>
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-table me-1"></i>
+                     Vorschau der Fragen
+                  </div>
+                  <div class="w-100 pt-3">
+                     <div class="scroller scroller-left float-start mt-2"><i class="bi bi-caret-left-fill"></i></div>
+                     <div class="scroller scroller-right float-end mt-2"><i class="bi bi-caret-right-fill"></i></div>
+                     <div class="wrapper-nav">
+                        <nav class="nav nav-tabs list mt-2" id="myTab" role="tablist">
+                           {section name=table_data1 loop=$table_data1}
+                           <a {if $table_data1[table_data1].ufid == $umfrageerf_gesp_werte_value_ufid2} class="nav-item nav-link pointer active" {else} class="nav-item nav-link pointer" {/if} data-bs-target="#tab{$table_data1[table_data1].ufid}" href="?action=fragen&tabufid={$table_data1[table_data1].ufid}&erfassen=1"role="tab" aria-controls="public" {if $smarty.section.table_data1.rownum == $umfrageerf_gesp_werte_value_ufid2} aria-selected="true" {/if}>Frage {$smarty.section.table_data1.rownum}</a>
+                           {/section}
+                           <a class="nav-item nav-link pointer" data-bs-target="#neuefrage" href="?action=fragen&tabufid=neuefrage&erfassen=1" role="tab">Neue Frage</a>
+                        </nav>
+                     </div>
+                     <div class="tab-content p-3" id="myTabContent">
+                        <div role="tabpanel" class="tab-pane fade active show mt-2" id="tab{$umfrageerf_gesp_werte_value_ufid2}" aria-labelledby="public-tab" >
+                           <h6>{$umfrageerf_value_frage}</h6>
+                           <br>
+                           {if $table_data2_anz > 0}
+                           <table class="table" id="sortable">
+                              <thead>
+                                 <tr>
+                                    <th width="20%">Sortierung</th>
+                                    <th width="70%">Antwort</th>
+                                    <th width="10%">Löschen</th>
+                                 </tr>
+                              </thead>
+                              <tbody id="tb">
+                                 {section name=table_data2 loop=$table_data2}
+                                 <tr data-sort-id="{$table_data2[table_data2].uaid}">
+                                    <td valign="middle" class="priority">{$smarty.section.table_data2.rownum}</td>
+                                    <td valign="middle">{$table_data2[table_data2].antwort}</td>
+                                    <td valign="middle"><button class="btn btn-delete btn-danger btn-rounded btn-icon" onclick="onClickDelete({$table_data2[table_data2].uaid})"><i class="fa fa-trash"></i></button></td>
+                                 </tr>
+                                 {/section}
+                           </table>
+                           <div id="msg"></div>
+                           {/if}
+                           <p align='center'><button class="btn btn-delete btn-danger btn-sm" onclick="onClickDeleteQuestion({$umfrageerf_value_ufid})">Frage Löschen</button></p>
+                        </div>
+                        <div class="tab-pane fade mt-2" id="neuefrage" role="tabpanel" aria-labelledby="group-dropdown2-tab" >
+                        </div>
+                     </div>
+                  </div>
+               </div>
+         </main>
+         <!-- footer -->
+         <div id="footer"></div>
+         </div>
+      </div>
+      <script src="../bootstrap/node_modules/move-js/move.js"></script>
+      <link href="../bootstrap/dist/scrollable-tabs.min.css" rel="stylesheet">
+      <script src="../bootstrap/dist/scrollable-tabs.min.js"></script>
+   </body>
+</html>
+{/if}

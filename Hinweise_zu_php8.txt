@@ -1,0 +1,39 @@
+Wegen function save_mail($mail) wurde Version 7.3 aktiv genommen.
+Die Extension imap ist aktuell in 8.1 nicht verfügbar.
+Warten auf 8.2 und testen, ob gesendete Mails im IMAP Gesendete auftauchen im Handy/Outlook
+
+-----------------------
+
+Hallo Herr Schwarz,
+
+die PHP IMAP-Extension ist bei den älteren PHP-Versionen bis einschließlich 7.4 aktiv.
+
+Ab 8.0 ist sie bei unseren eigenen PHP-Versionen nicht mehr verfügbar, weil es zunehmend schwieriger wird, die darunter liegende "libc-client"-IMAP-Bibliothek am Laufen zu halten, da diese seit 2007 keinerlei Updates mehr erhalten hat, Systemkomponenten wie OpenSSL die für verschlüsseltes IMAP nötig sind, aber zunehmend weiterentwickelt werden.
+Es gibt bessere Alternativen, die mit weniger Aufwand verbunden sind.
+
+Eine der Alternativen wäre cURL, das auch IMAP-Unterstützung hat.
+
+Eine weitere ist, die Debian-Standard PHP-Version zu benutzen.
+Bei Debian 11 ist das PHP 7.4 und es erhält für die ganze Lebenszeit von Debian 11 Sicherheitsupdates und danach wird es auch in Debian 12 (noch nicht veröffentlicht) eine PHP 8-Version geben (vmtl. 8.2), die das IMAP-Modul haben wird.
+
+Eine noch bessere Alternative sind Implementierungen von IMAP in reinem PHP wie z.B.:
+  https://github.com/Webklex/php-imap
+Letzteres unterstützt dann auch modernere Authentifizierungsmethoden wie z.B. OAuth 2.0, das von GMail mittlerweile vorausgesetzt wird.
+
+MfG
+
+Bernd Troidl
+
+Am 27.04.2023 um 15:40 schrieb Alexander Schwarz:
+> Hallo Herr Troidl,
+>
+> ich würde gerne bei einer Anwendung die in PHP verschickten Mails in den "gesendete Objekte" einordnen.
+> Dazu würde ich die Extension imap benötigen. Das Postfach liegt nicht bei webnet-service. Sollte aber unerheblich sein.
+> Könnten Sie die Erweiterung bitte aktivieren?
+>
+> User: web360
+>
+> Viele Grüße
+> Alexander Schwarz
+>
+>

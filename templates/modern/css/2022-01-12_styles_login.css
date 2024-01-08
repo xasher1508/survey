@@ -1,0 +1,121 @@
+body {
+	margin-top		:	10px;
+	margin-bottom		:	10px;
+	font-family		:	Arial;
+	font-size		:	12px;
+	color			:	#000000;
+
+}
+
+td {
+	font-family		:	verdana, arial;
+	font-size		:	9pt;
+	color		        :	#000000;
+}
+
+.Header {
+    background: url(../images/left.png) no-repeat;
+	font-family		:	Arial;
+	font-size		:	12px;
+	font-weight		:	bold;
+	color			:	#FFFFFF;
+
+    padding			:	0px 0 0 14px;
+    margin			:	0 10px 0 10px;	/* Rand x rechts x links */
+
+
+}
+.Header div {
+   background: url(../images/right.png) top right no-repeat;
+   padding-right: 13px;
+}
+.Header div div {
+   background: url(../images/center.png) repeat-x;
+   padding: 0;
+
+}
+
+.pat_list_box {
+	font-size		:	14px;
+
+   	border			: 	1px solid gray;
+	/*border-top-color	:	transparent;*/
+	background		: 	url(../images/box-u.png) repeat-x left bottom;
+	margin			:	0 10px 0 10px;	/* Rand x rechts x links */
+}
+
+
+/* Textfeldformatierung stammen von: http://www.web-toolbox.net/webtoolbox/css/css-formularfeld.htm#ixzz1EmDPi3Ti */
+.eingabe {
+ font-family		:		Verdana,Arial,Helvetica,sans-serif;
+ font-weight		:		bold;
+ color			:		#002276;
+ font-size		:		11px;
+ border			:		none;
+ border-bottom		: 		1px dotted #0050A0;
+ background-color	:		#FFFFFF;
+ width			:		250px;
+ padding		:		3px;
+}
+
+select {
+ font-family		:		Verdana,Arial,Helvetica,sans-serif;
+ font-weight		:		bold;
+ color			:		#002276;
+ font-size		:		11px;
+}
+
+.select1 {
+ width			:		267px;
+}
+
+
+a.squarebutton_blue{
+background: transparent url('../images/button/square-blue-left.gif') no-repeat top left;
+display: block;
+font: normal 12px Arial; /* Change 12px as desired */
+line-height: 15px; /* This value + 4px + 4px (top and bottom padding of SPAN) must equal height of button background (default is 23px) */
+height: 23px; /* Height of button background height */
+padding-left: 9px; /* Width of left menu image */
+text-decoration: none;
+}
+
+a:link.squarebutton_blue, a:visited.squarebutton_blue, a:active.squarebutton_blue{
+color: #494949; /*button text color*/
+}
+
+a.squarebutton_blue span{
+background: transparent url('../images/button/square-blue-right.gif') no-repeat top right;
+display: block;
+padding: 4px 9px 4px 0; /*Set 9px below to match value of 'padding-left' value above*/
+}
+
+a.squarebutton_blue:hover{ /* Hover state CSS */
+background-position: bottom left;
+}
+
+a.squarebutton_blue:hover span{ /* Hover state CSS */
+background-position: bottom right;
+color: black;
+}
+
+
+/* Pflichtfeldverletzung */
+.errorTable 
+{
+	BORDER-RIGHT: #9F0004 1px solid;
+	BORDER-TOP: #9F0004 1px solid;
+	BORDER-LEFT: #9F0004 1px solid;
+	BORDER-BOTTOM: #9F0004 1px solid;
+	FONT-SIZE: 9px;
+	background-color: #E2E1E1;
+} 
+
+.errorField 
+{
+	BORDER-RIGHT: #9F0004 1px solid;
+	BORDER-TOP: #9F0004 1px solid;
+	BORDER-LEFT: #9F0004 1px solid;
+	BORDER-BOTTOM: #9F0004 1px solid;
+	background-color: #FFFFCC;
+} 

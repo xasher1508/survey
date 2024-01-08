@@ -1,0 +1,222 @@
+{if $action == ''}
+<!DOCTYPE html>
+<html lang="de">
+   <head>
+
+                     {if $create_edit == ''}
+                       <title>JU & MI Kontakt erstellen</title>
+                     {else}
+                       <title>JU & MI Kontakt bearbeiten</title>
+                     {/if}
+      <link rel="stylesheet" href="../jquery/jquery-ui.css">
+      <link rel="stylesheet" href="../jquery/jquery.timepicker.min.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="../bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- nochmals bootstrap.css mit Erweiterungen vom Dashboard -->
+      <link href="css/styles.css" rel="stylesheet" />
+      <!-- icons in nav-->
+      <script src="js/all.js" crossorigin="anonymous"></script>
+      <script src="../jquery/jquery-3.4.1.min.js"></script>
+      <link rel="stylesheet" href="../bootstrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+<style>
+.multiselect-container {
+  position: absolute;
+  list-style-type: none;
+  margin: 5px 0 0 0;
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  -webkit-box-shadow: 0px 10px 23px -16px rgba(0, 0, 0, 0.14);
+  -moz-box-shadow: 0px 10px 23px -16px rgba(0, 0, 0, 0.14);
+  box-shadow: 0px 10px 23px -16px rgba(0, 0, 0, 0.14); }
+
+.multiselect-container .input-group {
+  margin: 5px; }
+
+.multiselect-container > li {
+  padding: 0;
+  font-size: 14px; }
+
+.multiselect-container > li > a.multiselect-all label {
+  font-weight: 700;
+  color: gray; }
+
+.multiselect-container > li.multiselect-group label {
+  margin: 0;
+  padding: 3px 20px 3px 20px;
+  height: 100%;
+  font-weight: 700; }
+
+.multiselect-container > li.multiselect-group-clickable label {
+  cursor: pointer; }
+
+.multiselect-container > li > a {
+  padding: 5px 0;
+  color: #000;
+  display: block; }
+
+.multiselect-container > li > a > label {
+  display: block;
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+  .multiselect-container > li > a > label:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    height: 20px;
+    width: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    background-color: transparent;
+    margin-right: 15px;
+    vertical-align: middle; }
+
+.multiselect-container > li.active > a > label:before {
+  font-family: 'fontAwesome';
+  content: "\f00c";
+  color: #fff;
+  background-color: #52de97;
+  border: 0;
+  display: inline-block;
+  padding: 0;
+  line-height: 1.2;
+  padding-left: 2px; }
+
+.multiselect-container > li > a > label.radio, .multiselect-container > li > a > label.checkbox {
+  margin: 0; }
+
+.multiselect-container > li > a > label > input[type=checkbox] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0; }
+
+.btn-group > .btn-group:nth-child(2) > .multiselect.btn {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px; }
+
+.form-inline .multiselect-container label.checkbox, .form-inline .multiselect-container label.radio {
+  padding: 3px 20px 3px 40px; }
+
+.form-inline .multiselect-container li a label.checkbox input[type=checkbox],
+.form-inline .multiselect-container li a label.radio input[type=radio] {
+  margin-left: -20px;
+  margin-right: 0; }
+
+.btn-group {
+  height: 52px;
+  width: calc(100% - 150px); }
+  .btn-group button {
+    border-radius: 4px;
+    background: #fff;
+    -webkit-box-shadow: 0px 10px 23px -16px rgba(0, 0, 0, 0.14);
+    -moz-box-shadow: 0px 10px 23px -16px rgba(0, 0, 0, 0.14);
+    box-shadow: 0px 10px 23px -16px rgba(0, 0, 0, 0.14);
+    padding: 0 10px;
+    text-align: left;
+    position: relative; }
+    .btn-group button:after {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      color: #999999; }
+    .btn-group button:focus {
+      -webkit-box-shadow: 0px 10px 23px -16px rgba(0, 0, 0, 0.14);
+      -moz-box-shadow: 0px 10px 23px -16px rgba(0, 0, 0, 0.14);
+      box-shadow: 0px 10px 23px -16px rgba(0, 0, 0, 0.14);
+      padding: 0 10px; }
+
+.sl {
+  color: gray;
+  width: 150px; }
+
+</style>
+   </head>
+   <body class="sb-nav-fixed">
+      <div id="navtop"></div>
+      {literal}
+      <script>
+         $(function(){
+           // im Navbar muss der toggle in der Callbackfunktion definiert werden. Sonst findet jquery getelementbyID nicht
+           $("#navtop").load('navtop.php', null, function(){$.getScript('js/scripts.js');});
+           $("#navleft").load("nav.php");
+           $("#footer").load("footer.php");
+         });
+      </script>
+      {/literal}
+      <div id="layoutSidenav">
+         <!-- Navigation left -->
+         <div id="navleft"></div>
+         <div id="layoutSidenav_content">
+            <main>
+            <!--Anwendung-->
+            <script src="../js/components/admin_create_verteileruser.js"></script>
+
+            <div class="container-fluid">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-edit me-1"></i>
+                     {if $create_edit == ''}
+                       Kontakt erstellen
+                     {else}
+                       Kontakt bearbeiten
+                     {/if}
+                  </div>
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Vorname:</div>
+                           <div class="col-12 col-md-8"><input type="text" class="form-control" name="vorname" id="vorname" value="{$contact_anlegen_vorname}"></div>
+                        </div>
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Nachname:</div>
+                           <div class="col-12 col-md-8"><input type="text" class="form-control" name="nachname" id="nachname" value="{$contact_anlegen_nachname}"></div>
+                        </div>
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Mailadresse:</div>
+                           <div class="col-12 col-md-8"><input type="email" class="form-control" name="mail" id="mail" value="{$contact_anlegen_mail}" onkeyup="checkUser()"></div>
+                        </div>
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">Verteilerliste zuweisen:</div>
+                           <div class="col-12 col-md-8">
+                             <select name="verteiler[]"class="form-control" id="verteiler" multiple="multiple">
+                               {section name=table_data loop=$table_data}
+                               <option value="{$table_data[table_data].mvid}" {if $table_data[table_data].selected == 1} selected {/if}>{$table_data[table_data].bezeichnung}</option>
+                               {/section}
+                             </select>
+                        </div>
+                      </div>
+                      <p align='center'>
+                          {if $create_edit == ''}
+                          <button class="col-6 btn btn-primary btn-sm mt-3" id="save" onclick="contactsave();">Speichern</button>
+                          {else}
+                          <button class="col-6 btn btn-primary btn-sm mt-3" id="save" onclick="contactupdate({$create_edit});">Update</button>
+                          {/if}
+                      </p>
+                  </div>
+               </div>
+            </div>
+            <div id="msg"></div>
+            <div id="msg1"></div>
+            </main>
+            <!-- footer -->
+            <div id="footer"></div>
+         </div>
+      </div>
+   </body>
+</html>
+{/if}
+

@@ -1,0 +1,166 @@
+{if $action == ''}
+<!doctype html>
+<html lang="de">
+   <head>
+      <meta charset="utf-8">
+      <title>Notenbuch erfassen</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="../bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- nochmals bootstrap.css mit Erweiterungen vom Dashboard -->
+      <link href="css/styles.css" rel="stylesheet" />
+      <!-- icons in nav-->
+      <script src="js/all.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="../bootstrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+      <script src="../jquery/jquery-3.4.1.min.js"></script>
+      <!-- jQuery UI CSS
+         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+         -->
+      <script src="../jquery/jquery-ui.js"></script>
+      <style>
+         .btn-group > .btn{
+         margin-bottom:20px;
+         border-radius:20px !important;
+         }
+      </style>
+      <script type="text/javascript">
+$('#ZuordnungModal').on('hidden.bs.modal', function (e) {
+  alert("close");
+})
+      </script>
+      <style type="text/css">
+         .ui-sortable tr {
+         cursor:pointer;
+         }
+         .ui-sortable tr:hover {
+         background:rgba(244,251,17,0.45);
+         }
+      </style>
+<script>
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();
+});
+</script>
+   </head>
+   <!--<body onload="if(document.erfassen)document.erfassen.{$umfrageerf_focus}.focus();return false;">-->
+   <body class="sb-nav-fixed">
+      <div id="navtop"></div>
+      {literal}
+      <script>
+         $(function(){
+           // im Navbar muss der toggle in der Callbackfunktion definiert werden. Sonst findet jquery getelementbyID nicht
+           $("#navtop").load('navtop.php', null, function(){$.getScript('js/scripts.js');});
+           $("#navleft").load("nav.php");
+           $("#footer").load("footer.php");
+         });
+      </script>
+      {/literal}
+      <div id="layoutSidenav">
+      <!-- Navigation left -->
+      <div id="navleft"></div>
+      <div id="layoutSidenav_content">
+         <main>
+            <!--Anwendung-->
+            <script src="../js/components/admin_notenbuch.js"></script>
+            <div class="container-fluid">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-table me-1"></i>
+                     Notenbuch erfassen
+                  </div>
+                  <div class="row mt-1 mt-sm-1 mb-1 mb-sm-1">
+                     <div class="col-5 col-md-4">Notenbuchname:</div>
+                     <div class="col-7 col-md-8"><input class="form-control" type="text" name="notenbuchname" id="notenbuchname" value="{$umfrageerf_value_frage}" size="60"></div>
+                  </div>
+                  <div class="row mt-1 mt-sm-1 mb-1 mb-sm-1">
+                     <div class="col-5 col-md-4">Lizenz erfoderlich:</div>
+                     <div class="col-7 col-md-8"><input type="checkbox" class="form-check-input" onchange="document.getElementById('notenbuchlizenz').disabled = !this.checked;" name='checkliz' id='checkliz'/></div>
+                  </div>
+                  <div class="row mt-1 mt-sm-1 mb-1 mb-sm-1">
+                     <div class="col-5 col-md-4">Anzahl vorhandene Lizenzen:</div>
+                     <div class="col-7 col-md-8"><input class="form-control" type="number" disabled name="notenbuchlizenz" id="notenbuchlizenz" value="{$umfrageerf_value_notenbuchlizenz}" size="60"></div>
+                  </div>
+
+
+               </div>
+               <div class="row">
+                  <div class="row col-3"></div>
+                  <div class="row col-6"><button class="btn btn-primary btn-sm mt-3" id="save" onclick="notenbuchsave();">Speichern</button></div>
+                  <div class="row col-3"></div>
+               </div>
+               <br>
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-table me-1"></i>
+                     Vorhandene Notenbücher
+                  </div>
+                  <div class="card-body">
+                     <div class="row mt-0 mt-sm-1 mb-0 mb-sm-1">
+                        <div class="row mt-0 mb-0">
+                           <div class="d-none col-md-5 d-md-block"><b>Notenbuch</b></div>
+                           <div class="d-none col-md-4 d-md-block"><b>Lizenzen</b></div>
+                           <div class="d-none col-md-3 d-md-block text-end"><b>Aktion</b></div>
+                        </div>
+                        {section name=table_data loop=$table_data}
+                        <div class="row mt-0 mt-sm-1 mb-0 mb-sm-1">
+                           <div class="col-8 col-md-5">
+                           {if $table_data[table_data].Anz_Lied != 0}<a href="print.php?art=B&zsid={$table_data[table_data].zsid}" target='_new'>{$table_data[table_data].bezeichnung}</a>{else}{$table_data[table_data].bezeichnung}{/if}
+                           {if $table_data[table_data].Anz_Lied != 0}<a href="print_toc.php?zsid={$table_data[table_data].zsid}" target='_new'>(Inhaltsverzeichnis)</a>{/if}
+                           </div>
+                           <div class="d-none col-md-4 d-md-block">{if $table_data[table_data].lizenzpflicht == 1}{$table_data[table_data].restlizenz}/{$table_data[table_data].anzahl_lizenz}{else}<i>keine</i>{/if}</div>
+                           <div class="col-4 col-md-3 text-end">
+                              <a class="btn mt-1 mt-md-0 btn-success btn-rounded btn-icon btn-sm" onclick="editNotenbuch({$table_data[table_data].zsid})"><i class="fa fa-edit" style="width:18px;"></i></a>
+                              <a class="btn mt-1 mt-md-0 btn-success btn-rounded btn-icon btn-sm" data-bs-toggle="modal" value="{$table_data[table_data].zsid}|notenbuchzuordnung.php" onclick="ShowZuordnung(this)" data-bs-target="#ZuordnungModal"><i class="fa fa-eye" style="width:18px;"></i></a>
+                              <a class="btn mt-1 mt-md-0 btn-success btn-rounded btn-icon btn-sm" data-bs-toggle="modal" value="{$table_data[table_data].zsid}|notenuserzuordnung.php"   onclick="ShowZuordnung(this)" data-bs-target="#ZuordnungModal"><i class="fa fa-user" style="width:18px;"></i></a>
+                              {if $admin_rolle == 1}
+                              <a class="btn mt-1 mt-md-0 btn-danger  btn-rounded btn-icon btn-sm" onclick="delZusammenstellung({$table_data[table_data].zsid})"><i class="fa fa-trash" style="width:18px;"></i></a>
+                              {/if}
+                           </div>
+                        </div>
+                        {/section}
+                        <!-- Modal, muss hier static sein. Das bedeutet man kann es nicht wegklicken, wenn man neben das Fenster klickt. Man will durch click auf close einen Reload auslösen -->
+                        <div class="modal" id="ZuordnungModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="ZuordnungModalLabel" aria-hidden="true">
+                           <div class="modal-dialog modal-xl">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <!--<h5 class="modal-title" id="ZuordnungModalLabel">Rollenübersicht</h5>-->
+                                    <button type="button" onclick="location.reload();" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                 </div>
+                                 <div class="modal-body">
+                                 </div>
+                                 <div class="modal-footer">
+                                    <button type="button" onclick="location.reload();" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Lösen Sie das Modal mit einem Button aus -->
+                        {literal}
+                        <script>
+                           function ShowZuordnung(a){
+                            let receive = a.getAttribute("value");
+                            var a = receive.split('|');
+                            var value = a[0];
+                            var file = a[1];
+
+                                $( '.modal-body' ).load( file+'?edit='+value , function () {
+                                   $( '#ZuordnungModal' ).modal({show: true });
+                               });
+                           }
+                        </script>
+                        {/literal}
+                     </div>
+                  </div>
+               </div>
+               <div id="msg"></div>
+         </main>
+
+         <!-- footer -->
+         <div id="footer"></div>
+         </div>
+      </div>
+   </body>
+</html>
+{/if}
+

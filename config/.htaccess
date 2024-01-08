@@ -1,0 +1,4 @@
+AuthName "pwd"
+AuthType Basic
+AuthUserFile /var/www/web712/html/config/.htpasswd
+require valid-user

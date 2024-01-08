@@ -1,0 +1,63 @@
+{if $action == ''}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>JU & MI Systemparameter</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="../bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- nochmals bootstrap.css mit Erweiterungen vom Dashboard -->
+      <link href="css/styles.css" rel="stylesheet" />
+      <!-- icons in nav-->
+      <script src="js/all.js" crossorigin="anonymous"></script>
+      <script src="../jquery/jquery-3.4.1.min.js"></script>
+      <link rel="stylesheet" href="../bootstrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+
+   </head>
+   <body class="sb-nav-fixed">
+      <div id="navtop"></div>
+      {literal}
+      <script>
+         $(function(){
+           // im Navbar muss der toggle in der Callbackfunktion definiert werden. Sonst findet jquery getelementbyID nicht
+           $("#navtop").load('navtop.php', null, function(){$.getScript('js/scripts.js');});
+           $("#navleft").load("nav.php");
+           $("#footer").load("footer.php");
+         });
+      </script>
+      {/literal}
+      <div id="layoutSidenav">
+         <!-- Navigation left -->
+         <div id="navleft"></div>
+         <div id="layoutSidenav_content">
+            <main>
+            <!--Anwendung-->
+            <script src="../js/components/admin_parameter.js"></script>
+                  <div class="container-fluid">
+                     <div class="card">
+                        <div class="card-header">
+                           <i class="fas fa-cog me-1"></i>
+                           Systemparameter
+                        </div>
+                        <div class="card-body">
+                        {section name=table_data1 loop=$table_data1}
+                        <div class="row mt-0 mt-sm-4 mb-0 mb-sm-4">
+                           <div class="col-12 col-md-4">{$table_data1[table_data1].beschreibung}</div>
+                           <div class="col-12 col-md-8"><input type="text" class="form-control" name="{$table_data1[table_data1].pid}" value="{$table_data1[table_data1].wert}"></div>
+                        </div>
+                        {/section}
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-12 btn-group">
+                    <a class="btn btn-primary mt-3" onclick="onClickSaveParameter()"><i class="fa fa-save" style="width:18px;"></i></a>
+                  </div>
+                  <div id="msg"></div>
+            </main>
+            <!-- footer -->
+            <div id="footer"></div>
+         </div>
+      </div>
+   </body>
+</html>
+{/if}

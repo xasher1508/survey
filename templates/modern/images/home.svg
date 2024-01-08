@@ -1,0 +1,5 @@
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" width="512" height="512" version="1.1" style=""><rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="none" stroke="none"/>
+	
+<g class="currentLayer" style=""><title>Layer 1</title><g id="svg_1" class="" fill="#277db2" fill-opacity="1" opacity="1">
+		<path style="stroke: rgb(0, 0, 0); stroke-width: 12px; stroke-linecap: butt; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;" d="m16,256 l240,-192 l96,72 l0,-32 l48,0 l0,72 l96,80 l-48,0 l0,192 l-120,0 l0,-160 l-96,0 l0,160 l-168,0 l0,-192 z" id="svg_2" fill="#277db2" fill-opacity="1" opacity="1"/>
+	</g></g></svg>

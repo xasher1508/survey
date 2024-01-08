@@ -1,0 +1,122 @@
+{if $action == ''}
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Auswertung</title>
+      <!-- https://www.budde-mediendesign.de/blog/programmierung/das-bootstrap-4-grid-system-->
+      <link href="../bootstrap/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!--
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+         -->
+      <style type="text/css">
+         body {
+         background-color	:	#FFF;
+         }
+         .headline {
+         padding-top: 10px;
+         padding-bottom: 10px;
+         }
+         .container2 {
+         width: 80%;
+         }
+         .progress {
+         height: 28px;
+         }
+         .progress-bar {
+         background-color: #0BA7AD;
+         font-size: 16px;
+         line-height: 28px;
+         }
+         span {
+         position: absolute;
+         right: 20px;
+         color: #002C6C;
+         }
+p {
+    margin: 0;
+    padding: 0;
+}
+      </style>
+   </head>
+   <body>
+      <div class="container">
+         <div class="grid">
+            <div class="headline col-12 bg-white">
+               <h2>
+                  <p class="text-center">{$result_headline}</p>
+               </h2>
+               <p class="text-center small">({$result_datum_von} bis {$result_datum_bis})</p>
+            </div>
+            <div class="col-12 ">
+               <table class="table table-sm">
+                  <tbody>
+                     <!--
+                     <tr>
+                        <th scope="row">Vollständige Teilnehmer</th>
+                        <td>{$result_anz_fertige}</td>
+                     <tr>
+                        <th scope="row">Teilweise beantwortet</th>
+                        <td>{$result_anz_angefangen}</td>
+                     </tr>
+                     -->
+                     <tr>
+                        <th scope="row">Anzahl Teilnehmer</th>
+                        <td>{$result_anz_teilnehmer}</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+      <div class="container">
+      {section name=table_data loop=$table_data}
+      <p class="text-primary">{$table_data[table_data].frage}<br>({$table_data[table_data].anz_userfrage} Antworten)</p>
+      {if $table_data[table_data].multiple == '1'}
+      <p class="small">(Multiple Choice Frage)</p>
+      {/if}
+      {section name=inner loop=$table_data[table_data].inner}
+      <div class="row">
+         <div class="col-5">
+            <label>
+            <p class="small">{$table_data[table_data].inner[inner].antwort}</p>
+            </label>
+         </div>
+         <div class="col-7">
+            <div class="progress">
+               <div class="progress-bar" role="progressbar" aria-valuenow="{$table_data[table_data].inner[inner].prozent}" aria-valuemin="0" aria-valuemax="100" style="width: {$table_data[table_data].inner[inner].prozent}%;"><span>{$table_data[table_data].inner[inner].prozent2}%</span></div>
+            </div>
+         </div>
+      </div>
+      {/section}
+      <br>
+      {/section}
+      </div>
+      <div class="container">
+         <div class="grid">
+
+           <div class="col-12 ">
+             <table class="table table-striped">
+             {section name=table_data3 loop=$table_data3}
+              {if $smarty.section.table_data3.rownum == 1}
+                <thead>
+                  <tr>
+                    <th scope="col"><p class="text-primary">{$umfrage_value_freitext_headline}</p></th>
+                  </tr>
+                </thead>
+              <tbody>
+              {/if}
+              <tr>
+                <td>{$table_data3[table_data3].freitext}</td>
+               </tr>
+              {/section}
+               </tbody>
+              </table>
+           </div>
+         </div>
+      </div>
+
+   </body>
+</html>
+{/if}

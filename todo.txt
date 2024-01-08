@@ -1,0 +1,17 @@
+ todo
+-- Spalte ausblenden wenn klein
+-- Ladebalken 5 Sekunden
+-- systemparameter
+-- Menü in Datenbank übernommen
+-- unlock im Login berücksichtigen
+-- Rechte einbauen
+-- Rechteverwaltung
+-- Bezeichnungen DataTable Suchen etc
+-- Bearbeiten 12 Uhr statt 24 Uhr
+-- Focus beim Frage erfassen
+
+|Rolle löschen Erfolgstext zu schnell -> geht nicht
+|Kacheln Startseite -> vertragt
+|Passwortvorschau - vertagt
+
+Direkte Seite anspringen und nach Login wieder dahin zurück
