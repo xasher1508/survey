@@ -21,6 +21,5 @@ $row_name    = $result_name->fetch_array();
 $smarty->assign('startseite_name', "$row_name[vorname] $row_name[nachname]");
 
 
-$smarty->assign('action', "$action");
 $smarty->display("modern/dashboard/$templatename");
 ?> 

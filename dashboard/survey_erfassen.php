@@ -48,7 +48,7 @@ if ($action == '') {
 #        $_SESSION["umfrageerf_new"] = 1;
         
     }else{
-        if($_GET['edit'] == 1){
+        if(isset($_GET['edit']) AND $_GET['edit'] == 1){
           $umid = $_GET['umid'];
           $_SESSION["umfrageerf_umid"] = $umid;
           $result_edit = $db->query("SELECT date_format(datum_von, '%d.%m.%Y') datum_von
@@ -61,14 +61,32 @@ if ($action == '') {
                                        FROM jumi_umfragen
                                       WHERE umid = $umid");
           $row_edit    = $result_edit->fetch_array();
+          if(isset($_SESSION["umfrageerf_value_datumvon"])){
           $_SESSION["umfrageerf_value_datumvon"] = $row_edit['datum_von'];
-          $_SESSION["umfrageerf_value_zeitvon"] = $row_edit['zeit_von'];
-          $_SESSION["umfrageerf_value_datumbis"] = $row_edit['datum_bis'];
-          $_SESSION["umfrageerf_value_zeitbis"] = $row_edit['zeit_bis'];
-          $_SESSION["umfrageerf_value_headline"] = $row_edit['headline'];
-          $_SESSION["umfrageerf_value_freitext"] = $row_edit['freitext'];
-          $_SESSION["umfrageerf_value_freitext_headline"] = $row_edit['freitext_headline'];
+          }
           
+          if(isset($_SESSION["umfrageerf_value_zeitvon"])){
+          $_SESSION["umfrageerf_value_zeitvon"] = $row_edit['zeit_von'];
+          }
+          if(isset($_SESSION["umfrageerf_value_datumbis"])){
+          $_SESSION["umfrageerf_value_datumbis"] = $row_edit['datum_bis'];
+          }
+          
+          if(isset($_SESSION["umfrageerf_value_zeitbis"])){
+          $_SESSION["umfrageerf_value_zeitbis"] = $row_edit['zeit_bis'];
+          }
+                    
+          if(isset($_SESSION["umfrageerf_value_headline"])){
+          $_SESSION["umfrageerf_value_headline"] = $row_edit['headline'];
+          }
+          
+          if(isset($_SESSION["umfrageerf_value_freitext"])){
+          $_SESSION["umfrageerf_value_freitext"] = $row_edit['freitext'];
+          }
+          
+          if(isset($_SESSION["umfrageerf_value_freitext_headline"])){
+          $_SESSION["umfrageerf_value_freitext_headline"] = $row_edit['freitext_headline'];
+          }
           
           # Erste Frage selektieren, damit der Reiter für die Frage gleich aktiv ist
           $result_q1 = $db->query("SELECT min(ufid) ufid
@@ -77,17 +95,54 @@ if ($action == '') {
           $row_q1    = $result_q1->fetch_array();
           $_SESSION["umfrageerf_ufid"] = $row_q1['ufid'];
         }
+        
+        if(isset($_SESSION["umfrageerf_value_datumvon"])){
         $smarty->assign('umfrageerf_value_datumvon', $_SESSION["umfrageerf_value_datumvon"]);
+        }else{
+        $smarty->assign('umfrageerf_value_datumvon', '');
+        }
+        
+        if(isset($_SESSION["umfrageerf_value_datumvon"])){
         $smarty->assign('umfrageerf_value_zeitvon', $_SESSION["umfrageerf_value_zeitvon"]);
+        }else{
+        $smarty->assign('umfrageerf_value_zeitvon', '');
+        }
+        
+        if(isset($_SESSION["umfrageerf_value_datumbis"])){
         $smarty->assign('umfrageerf_value_datumbis', $_SESSION["umfrageerf_value_datumbis"]);
+        }else{
+        $smarty->assign('umfrageerf_value_datumbis', '');
+        }
+        
+        if(isset($_SESSION["umfrageerf_value_zeitbis"])){
         $smarty->assign('umfrageerf_value_zeitbis', $_SESSION["umfrageerf_value_zeitbis"]);
+        }else{
+        $smarty->assign('umfrageerf_value_zeitbis', '');
+        }
+        
+        if(isset($_SESSION["umfrageerf_value_headline"])){
         $smarty->assign('umfrageerf_value_headline', $_SESSION["umfrageerf_value_headline"]);
+        }else{
+        $smarty->assign('umfrageerf_value_headline', '');
+        }
+        
+        if(isset($_SESSION["umfrageerf_value_freitext"])){
         $smarty->assign('umfrageerf_value_freitext', $_SESSION["umfrageerf_value_freitext"]);
+        }else{
+        $smarty->assign('umfrageerf_value_freitext', '');
+        }
+        
+        if(isset($_SESSION["umfrageerf_value_freitext_headline"])){
         $smarty->assign('umfrageerf_value_freitext_headline', $_SESSION["umfrageerf_value_freitext_headline"]);
+        }else{
+        $smarty->assign('umfrageerf_value_freitext_headline', '');
+        }
+        
 #        $smarty->assign('umfrageerf_value_new', "0");
 #        $_SESSION["umfrageerf_new"] = 0;
       }        
-
+    
+    $smarty->assign('umfrageerf_error', 0);
     if (isset($_GET['error'])) {
         
         $errorno = $_GET['error'];
@@ -300,9 +355,11 @@ if ($action == 'fragen') {
 
         }
     }
+    if(isset($_SESSION["umfrageerf_ufid"])){
     $ufid = $_SESSION["umfrageerf_ufid"];
+    }
 
-    if ($ufid != '') {
+    if (isset($ufid) AND $ufid != '') {
         $result_frage = $db->query("SELECT frage, multiple
                                  FROM jumi_umfragen_fragen
                                 WHERE ufid = $ufid");
@@ -310,6 +367,10 @@ if ($action == 'fragen') {
         $smarty->assign('umfrageerf_value_frage', htmlspecialchars($row_frage['frage']));
         $smarty->assign('umfrageerf_value_multiple', $row_frage['multiple']);
         $smarty->assign('umfrageerf_value_ufid', $ufid);
+    }else{
+        $smarty->assign('umfrageerf_value_frage', '');
+        $smarty->assign('umfrageerf_value_multiple', '');
+        $smarty->assign('umfrageerf_value_ufid', '');
     }
     
     # Gespeicherte Werte
@@ -326,9 +387,12 @@ if ($action == 'fragen') {
             $table_data1[] = $row1;
         }
     }
-    
+    if(isset($table_data1)){
     $smarty->assign('table_data1', $table_data1);
-    if ($ufid != '') {
+    }
+    
+    
+    if (isset($ufid) AND $ufid != '') {
         $smarty->assign('umfrageerf_gesp_werte_value_ufid2', "$ufid");
         $query2 = "SELECT uaid, antwort
                      FROM jumi_umfragen_antworten

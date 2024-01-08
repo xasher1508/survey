@@ -13,9 +13,5 @@ $smarty       = new SmartyAdmin();
 $templatename = substr(basename($_SERVER['PHP_SELF']), 0, -3) . "html";
 require_once "../language/german.inc.php";
 
-
-
-$smarty->assign('action', "$action");
 $smarty->display("modern/dashboard/$templatename");
-?> 
-
+?>

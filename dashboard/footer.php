@@ -16,7 +16,5 @@ require_once "../language/german.inc.php";
 $jahr = date("Y");
 $smarty->assign('jahr', "$jahr");
 
-$smarty->assign('action', "$action");
 $smarty->display("modern/dashboard/$templatename");
-?> 
-
+?>

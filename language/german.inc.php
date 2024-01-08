@@ -4,7 +4,7 @@ header("content-type: text/html; charset=utf-8");
 $smarty->assign('global_titel', "Administration JU & MI");
 ##$smarty->assign('global_service_admin', "$global_service_admin");
 ##$smarty->assign('global_service_mail', "$global_service_mail");
-$smarty->assign('global_template', "$template");
+#$smarty->assign('global_template', "$template");
 #-------------- Globale Konfiguration beendet, Ã„nderungen ab hier ---------------
 
 # titel.html
