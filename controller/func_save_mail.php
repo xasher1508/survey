@@ -9,7 +9,7 @@ function save_mail($mail)
     
 
     // # Script um sich $path anzeigen zu lassen:
-    // $mbox = imap_open("{imap.ionos.de:993/imap/ssl}", "$mailjumi", "$mailpwd", OP_HALFOPEN)
+    // $mbox = imap_open("{web311.dogado.net:993/imap/ssl}", "$mailjumi", "$mailpwd", OP_HALFOPEN)
     // or die("can't connect: " . imap_last_error());
     // if($mbox){
     // echo "connect";
@@ -30,7 +30,7 @@ function save_mail($mail)
     // 
     // imap_close($mbox);
     
-    $path       = "{imap.ionos.de:993/imap/ssl}Gesendete Objekte";
+    $path       = "{web311.dogado.net:993/imap/ssl}INBOX.Sent";
     $imapStream = imap_open($path, $mail->Username, $mail->Password);
     # Letzter Flag Seen, damit die Mail bereits als gelesen in gesendete Objekte eingestellt wird
     $result     = imap_append($imapStream, $path, $mail->getSentMIMEMessage(),"\Seen");
