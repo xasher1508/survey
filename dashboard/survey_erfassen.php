@@ -34,7 +34,6 @@ if ($action == '') {
     #  # -- Fehlermeldungen -- #
 
     if(isset($_GET['new']) AND $_GET['new'] == 1){
-echo "hier0<br>";
         unset($_SESSION["umfrageerf_value_datumvon"]);
         unset($_SESSION["umfrageerf_value_zeitvon"]);
         unset($_SESSION["umfrageerf_value_datumbis"]);
@@ -49,9 +48,7 @@ echo "hier0<br>";
 #        $_SESSION["umfrageerf_new"] = 1;
         
     }else{
-echo "hier1<br>";
         if(isset($_GET['edit']) AND $_GET['edit'] == 1){
-echo "hier2<br>";
           $umid = $_GET['umid'];
           
           $_SESSION["umfrageerf_umid"] = $umid;
