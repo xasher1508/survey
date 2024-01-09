@@ -56,7 +56,7 @@ try {
     $mail->CharSet    = 'UTF-8';
     $mail->Encoding   = 'base64';
     $mail->SMTPDebug  = 0;
-    $mail->Host       = 'smtp.ionos.de'; //Set the SMTP server to send through
+    $mail->Host       = 'web311.dogado.net'; //Set the SMTP server to send through
     $mail->SMTPAuth   = true; //Enable SMTP authentication
     $mail->Username   = "$mailjumi"; //SMTP username
     $mail->Password   = "$mailpwd"; //SMTP password

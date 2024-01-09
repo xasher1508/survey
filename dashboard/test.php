@@ -1,14 +1,14 @@
 <?php
 error_reporting(E_ALL);
 
-$mbox = imap_open("{imap.ionos.de:993/imap/ssl}", "info@ju-and-mi.de", "!S3ge1gP", OP_HALFOPEN)
+$mbox = imap_open("{web311.dogado.net:993/imap/ssl}", "info@ju-and-mi.de", "!S3ge1gP", OP_HALFOPEN)
       or die("can't connect: " . imap_last_error());
 if($mbox){
 echo "connect";
 }else{
 echo "fail";
 }
-$list = imap_getmailboxes($mbox, "{imap.ionos.de:993/imap/ssl}", "*");
+$list = imap_getmailboxes($mbox, "{web311.dogado.net:993/imap/ssl}", "*");
 if (is_array($list)) {
     foreach ($list as $key => $val) {
         echo "($key) ";

@@ -16,7 +16,7 @@ function save_mail($mail)
     // }else{
     // echo "fail";
     // }
-    // $list = imap_getmailboxes($mbox, "{imap.ionos.de:993/imap/ssl}", "*");
+    // $list = imap_getmailboxes($mbox, "{web311.dogado.net/imap/ssl}", "*");
     // if (is_array($list)) {
     // foreach ($list as $key => $val) {
     // echo "($key) ";
