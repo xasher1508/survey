@@ -14,9 +14,6 @@ $templatename = substr(basename($_SERVER['PHP_SELF']), 0, -3) . "html";
 require_once "../language/german.inc.php";
 
 
-$action = $_GET['action'];
-
-if ($action == '') {
   $db = dbconnect();
   
   $query_umid = $db->query("SELECT max(umid) umid
@@ -140,10 +137,5 @@ if ($action == '') {
     }
     $smarty->assign('table_data3', $table_data3);
 
-
-}
-
-
-$smarty->assign('action', "$action");
 $smarty->display("modern/auswertung/$templatename");
 ?> 

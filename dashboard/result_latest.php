@@ -12,12 +12,7 @@ require_once("../config/datenbankanbindung.php");
 $smarty       = new SmartyAdmin();
 $templatename = substr(basename($_SERVER['PHP_SELF']), 0, -3) . "html";
 require_once "../language/german.inc.php";
-
-
-$action = $_GET['action'];
-
-if ($action == '') {
-  $db = dbconnect();
+$db = dbconnect();
   
 
   if(isset($_GET['editumid']) and $_GET['editumid'] != ''){
@@ -138,7 +133,9 @@ if ($action == '') {
         $row['anz_antworten_frage'] = $row_anz_antworten['Anz'];
         $table_data[] = $row;
     }
-    $smarty->assign('table_data', $table_data);
+    if(isset($table_data)){
+     $smarty->assign('table_data', $table_data);
+    }
     
 #    echo"<pre>";
 #    print_r($table_data);
@@ -166,12 +163,10 @@ if ($action == '') {
     while ($row3 = $result3->fetch_array()) {
         $table_data3[] = $row3;
     }
-    $smarty->assign('table_data3', $table_data3);
+    if(isset($table_data3)){
+      $smarty->assign('table_data3', $table_data3);
+    }
 
 
-}
-
-
-$smarty->assign('action', "$action");
 $smarty->display("modern/dashboard/$templatename");
-?> 
+?>

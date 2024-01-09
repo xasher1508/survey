@@ -13,7 +13,11 @@ if ($function == 'save_with_files')
         $liednr = $_POST['liednr'];
         $verlag = $_POST['verlag'];
         #csid gesetzt, wenn Member bearbeitet wird
-        $jndid_edit = $_POST['jndid_edit'];
+        if(isset($_POST['jndid_edit'])){
+          $jndid_edit = $_POST['jndid_edit'];
+        }else{
+          $jndid_edit = 0;
+        }
         $anz_lizenzen = $_POST['anz_lizenzen'];
         $streamlizenz = $_POST['streamlizenz'];
         $bemerkung   = $db->real_escape_string(stripslashes( $_POST['bemerkung'] ));
@@ -55,11 +59,11 @@ if ($function == 'save_with_files')
                                        LIMIT 1
                                     ");
             $row_vg = $result_vg->fetch_array();
-            if($row_vg['vid'] == ''){
+            if(isset($row_vg['vid']) AND $row_vg['vid'] != ''){
+               $vid=$row_vg['vid'];
+            }else{
                 $sql1 = $db->query("INSERT INTO jumi_noten_verlag ( bezeichnung ) VALUES ( '$verlag' )");
                 $vid = $db->insert_id;
-            }else{
-                $vid=$row_vg['vid'];
             }
             
         if (move_uploaded_file(strip_tags($_FILES['upload_file']['tmp_name']) , $vpb_final_location))
@@ -75,7 +79,12 @@ if ($function == 'save_with_files')
                                          AND streamlizenz = '$streamlizenz'
                                 ");
             $row = $result->fetch_array();
-            if ($row['jndid'] == '' AND $jndid_edit == '-1')
+            if(isset($row['jndid'])){
+              $jndid = $row['jndid'];
+            }else{
+              $jndid = '';
+            }
+            if ($jndid == '' AND $jndid_edit == '-1')
             {
                 $sql1 = $db->query("INSERT INTO jumi_noten_daten ( titel
                                                               , liednr

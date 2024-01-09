@@ -261,7 +261,7 @@ $pos = $pdf->GetY()+15;
 $pdf->SetY($pos);
 while ($row = $result->fetch_array()){
 $col = array();
-$col[] = array('text' => utf8_decode($row['titel']), 'width' => '160', 'height' => '7', 'align' => 'L', 'font_name' => 'Arial', 'font_size' => '12', 'font_style' => '', 'fillcolor' => '255,255,255', 'textcolor' => '0,0,0', 'drawcolor' => '0,0,0', 'linewidth' => '0.2', 'linearea' => 'LTB');
+$col[] = array('text' => iconv("UTF-8", "ISO-8859-1", $row['titel']), 'width' => '160', 'height' => '7', 'align' => 'L', 'font_name' => 'Arial', 'font_size' => '12', 'font_style' => '', 'fillcolor' => '255,255,255', 'textcolor' => '0,0,0', 'drawcolor' => '0,0,0', 'linewidth' => '0.2', 'linearea' => 'LTB');
 $col[] = array('text' => $row['liednr'], 'width' => '20', 'height' => '7', 'align' => 'R', 'font_name' => 'Arial', 'font_size' => '12', 'font_style' => '', 'fillcolor' => '255,255,255', 'textcolor' => '0,0,0', 'drawcolor' => '0,0,0', 'linewidth' => '0.2', 'linearea' => 'TBR');
 $columns[] = $col;
 
@@ -283,6 +283,6 @@ $pdf->WriteTable($filler);
 // Show PDF   
 #$pdf->Output();
 
-$pdf->Output('I',utf8_decode($row_titel['bezeichnung']).'_toc');
+$pdf->Output('I',iconv("UTF-8", "ISO-8859-1", $row_titel['bezeichnung']).'_toc');
 
 ?>

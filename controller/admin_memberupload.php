@@ -30,7 +30,11 @@ if ($function == 'save_with_files')
         $nachname = $_POST['nachname'];
         $mail = $_POST['mail'];
         #csid gesetzt, wenn Member bearbeitet wird
-        $csid_edit = $_POST['csid_edit'];
+        if(isset($_POST['csid_edit'])){
+          $csid_edit = $_POST['csid_edit'];
+        }else{
+          $csid_edit = 0;
+        }
         $einw_livestream = $_POST['einw_livestream'];
         $einw_homepage = $_POST['einw_homepage'];
         $einw_socialmedia = $_POST['einw_socialmedia'];
@@ -104,7 +108,12 @@ if ($function == 'save_with_files')
                                          AND mail = '$mail'
                                     ");
             $row = $result->fetch_array();
-            if ($row['csid'] == '' AND $csid_edit == '-1')
+            if(isset($row['csid'])){
+              $csid_vorh = $row['csid'];
+            }else{
+              $csid_vorh =  '';
+            }
+            if ($csid_vorh == '' AND $csid_edit == '-1')
             {
             
                $sql1 = $db->query("INSERT INTO jumi_chor_saenger ( vorname
@@ -190,7 +199,7 @@ if ($function == 'save_with_files')
                $boundary      = "PHP-mixed-".md5(time());
                #$headers = "MIME-Version: 1.0\n";
                #$headers .= "Content-type: text/html; charset=utf-8\n";
-               $headers .= "From: $mailjumi <$mailjumi>\n";
+               $headers = "From: $mailjumi <$mailjumi>\n";
                $headers .= "Reply-To: $mailjumi <$mailjumi>\n";
                $headers .= "Content-Type: multipart/mixed; boundary=\"".$boundary."\"\n";
                #$headers .= " boundary=\"".$boundary."\"\r\n";
@@ -203,7 +212,7 @@ if ($function == 'save_with_files')
                $data = chunk_split(base64_encode($data));
                $boundWithPre  = "\n--".$boundary;
        
-               $message .= "--".$boundary."\r\n";
+               $message = "--".$boundary."\r\n";
                $message .= "Content-Type: text/html; charset=\"UTF-8\"\r\n";
                $message .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
                $message .= $text."\r\n";

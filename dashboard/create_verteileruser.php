@@ -43,13 +43,6 @@ if(isset($_GET['new']) AND $_GET['new'] == 1){;
 #if(!rore($user_admin,'a_admanleg','RE')){require("lib/rechte.php");exit;}
 #// Rechteüberprüfung ende
 
-if(isset($_GET['action'])){
-  $action = $_GET['action'];
-}else{
-  $action = '';
-}
-
-if($action == ''){
 /*
   # Daten aufbereiten für Zurückbutton
     if(isset($_SESSION["anlegen_vorname"])){
@@ -78,6 +71,11 @@ if($action == ''){
          $smarty->assign('contact_anlegen_vorname', $row0['vorname']);
          $smarty->assign('contact_anlegen_nachname', $row0['nachname']);
          $smarty->assign('contact_anlegen_mail', $row0['mail']);
+       }else{
+         $smarty->assign('create_edit', '');
+         $smarty->assign('contact_anlegen_vorname', '');
+         $smarty->assign('contact_anlegen_nachname', '');
+         $smarty->assign('contact_anlegen_mail', '');
        }
        
         $query = "SELECT mvid, bezeichnung FROM jumi_mailverteiler ORDER BY mvid ASC";
@@ -105,13 +103,9 @@ if($action == ''){
          $row['selected'] = $selected;
          $value[] = $row;
         }
-       $smarty->assign('table_data', $value);
+       if(isset($value)){
+         $smarty->assign('table_data', $value);
+       }
 
-}
-
-
-
-$smarty->assign('action', "$action");
 $smarty->display("$template/dashboard/$templatename");
 ?>
-

@@ -86,23 +86,8 @@ if ($function == 'contactupdate') {
     $nachname = trim($_POST['nachname']);
     $mail     = trim($_POST['mail']);
     $verteiler   = $_POST['verteiler'];
-    $pwdback  = $_POST['pwdback'];
     $mveid      = $_POST['mveid'];
-    
-    
-    if (isset($pwdback)) {
-        if ($pwdback == '1') {
-            $pwdback = '1';
-        } else {
-            $pwdback = '0';
-        }
-    } else {
-        $pwdback = '0';
-    }
-    
-    
-    
-    
+
     if ($mveid == '') {
         echo '<div class="alert alert-danger"><i class="fa fa-fw fa-thumbs-down"></i> Die KontaktID wurde nicht übertragen</div>|***|error';
         exit;

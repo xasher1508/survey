@@ -62,10 +62,10 @@ while ($row = $result->fetch_array()){
     }
       $pdf->SetFont('Arial','B',10);
       $pdf->SetY(-5); 
-      $pdf->Cell( 0, 0, "- ".utf8_decode($row['titel'])." ($i/$pages_count) -", 0, 0, 'C' ); 
+      $pdf->Cell( 0, 0, "- ".iconv("UTF-8", "ISO-8859-1", $row['titel'])." ($i/$pages_count) -", 0, 0, 'C' ); 
       #$pdf->Write(0, "$i"); 
   }
 }
 
-$pdf->Output('I',utf8_decode($row_titel['bezeichnung']));
+$pdf->Output('I',iconv("UTF-8", "ISO-8859-1", $row_titel['bezeichnung']));
 ?>

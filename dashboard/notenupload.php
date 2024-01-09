@@ -45,9 +45,19 @@ require_once "../language/german.inc.php";
           }
           $value[] = $row;
          }
+         if(isset($value)){
          $smarty->assign('table_data', $value);
+         }
+       }else{
+       $smarty->assign('create_edit', '');
+       $smarty->assign('notenupload_titel', '');
+       $smarty->assign('notenupload_liednr', '');
+       $smarty->assign('notenupload_anz_lizenzen', '');
+       $smarty->assign('notenupload_streamlizenz', '');
+       $smarty->assign('notenupload_bemerkung', '');
+       $smarty->assign('notenupload_verlag', '');
        }
 
-$smarty->assign('action', "$action");
+
 $smarty->display("modern/dashboard/$templatename");
-?> 
+?>

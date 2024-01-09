@@ -41,7 +41,9 @@ if ($action == '') {
       while ($row = $result->fetch_array()) {
         $table_data[]      = $row;
       }
-      $smarty->assign('table_data', $table_data);
+      if(isset($table_data)){
+       $smarty->assign('table_data', $table_data);
+      }
       
       # Zugewiesene Noten
       $query1 = "SELECT jndid, titel,anz_lizenzen
@@ -59,7 +61,9 @@ if ($action == '') {
         $row1['restlizenz'] = $row_rl['Rest'];
         $table_data1[]      = $row1;
       }
-      $smarty->assign('table_data1', $table_data1);
+      if(isset($table_data1)){
+        $smarty->assign('table_data1', $table_data1);
+      }
     
 }
 

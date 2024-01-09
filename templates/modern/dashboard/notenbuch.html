@@ -1,4 +1,3 @@
-{if $action == ''}
 <!doctype html>
 <html lang="de">
    <head>
@@ -70,7 +69,7 @@ $(document).ready(function(){
                   </div>
                   <div class="row mt-1 mt-sm-1 mb-1 mb-sm-1">
                      <div class="col-5 col-md-4">Notenbuchname:</div>
-                     <div class="col-7 col-md-8"><input class="form-control" type="text" name="notenbuchname" id="notenbuchname" value="{$umfrageerf_value_frage}" size="60"></div>
+                     <div class="col-7 col-md-8"><input class="form-control" type="text" name="notenbuchname" id="notenbuchname" value="" size="60"></div>
                   </div>
                   <div class="row mt-1 mt-sm-1 mb-1 mb-sm-1">
                      <div class="col-5 col-md-4">Lizenz erfoderlich:</div>
@@ -78,7 +77,7 @@ $(document).ready(function(){
                   </div>
                   <div class="row mt-1 mt-sm-1 mb-1 mb-sm-1">
                      <div class="col-5 col-md-4">Anzahl vorhandene Lizenzen:</div>
-                     <div class="col-7 col-md-8"><input class="form-control" type="number" disabled name="notenbuchlizenz" id="notenbuchlizenz" value="{$umfrageerf_value_notenbuchlizenz}" size="60"></div>
+                     <div class="col-7 col-md-8"><input class="form-control" type="number" disabled name="notenbuchlizenz" id="notenbuchlizenz" value="" size="60"></div>
                   </div>
 
 
@@ -162,5 +161,3 @@ $(document).ready(function(){
       </div>
    </body>
 </html>
-{/if}
-

@@ -17,18 +17,6 @@ $smarty       = new SmartyAdmin();
 
 require_once "../language/german.inc.php";
 
-if(isset($_GET['action'])){
-  $action = $_GET['action'];
-}else{
-  $action = '';
-}
 
-if($action == ''){
-
-}
-
-
-
-$smarty->assign('action', "$action");
 $smarty->display("modern/selfregistration/$templatename");
 ?>

@@ -12,16 +12,6 @@ if(!rechte('verteilerlisten.php', $uid)){
 }
 require_once "../language/german.inc.php";
 
-
-
-if (isset($_GET['action'])) {
-    $action = $_GET['action'];
-} else {
-    $action = '';
-}
-
-
-if ($action == '') {
   if (isset($_GET['edit'])) {
     $mvid = $_GET['edit'];
     $smarty->assign('verteiler_edit', $mvid);
@@ -42,7 +32,9 @@ if ($action == '') {
       while ($row = $result->fetch_array()) {
         $table_data[]      = $row;
       }
-      $smarty->assign('table_data', $table_data);
+      if(isset($table_data)){
+        $smarty->assign('table_data', $table_data);
+      }
       
       # Zugewiesene Rechte
       $query1 = "SELECT mveid, vorname, nachname
@@ -55,11 +47,9 @@ if ($action == '') {
       while ($row1 = $result1->fetch_array()) {
         $table_data1[]      = $row1;
       }
-      $smarty->assign('table_data1', $table_data1);
-    
-}
+      if(isset($table_data1)){
+        $smarty->assign('table_data1', $table_data1);
+      }
 
-$smarty->assign('action', "$action");
 $smarty->display("$template/dashboard/$templatename");
 ?>
-

@@ -40,6 +40,6 @@ require_once "../language/german.inc.php";
       }
       $smarty->assign('table_data1', $table_data1);
 
-$smarty->assign('action', "$action");
+
 $smarty->display("modern/dashboard/$templatename");
 ?>

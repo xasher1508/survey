@@ -58,7 +58,12 @@ require_once "../language/german.inc.php";
                                      FROM jumi_noten_uploads
                                     WHERE jndid=$row[jndid]");
           $row_link    = $result_link->fetch_array();
-          if(file_exists($row_link['filename'])){
+          if(isset($row_link['filename'])){
+            $filename = $row_link['filename'];
+          }else{
+            $filename = '';
+          }
+          if(file_exists($filename)){
             $fileexists = 1;
           }else{
             $fileexists = 0;
@@ -84,7 +89,7 @@ require_once "../language/german.inc.php";
             $songbook = substr($songbook,0,-2);
           $row['restlizenz'] = $row_rl['Rest'];
           $row['liednr'] = $liednr;
-          $row['link'] = $row_link['filename'];
+          $row['link'] = $filename;
           $row['fileexists'] = $fileexists;
           $row['songbook'] = $songbook;
           $row['streamlizenz_vorh'] = $streamlizenz_vorh;
@@ -93,8 +98,5 @@ require_once "../language/german.inc.php";
        $smarty->assign('table_data', $value);
        $smarty->assign('admin_rolle', rolle($uid));
 
-
-
-$smarty->assign('action', "$action");
 $smarty->display("$template/dashboard/$templatename");
 ?>

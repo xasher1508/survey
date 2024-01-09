@@ -21,17 +21,6 @@ if(!rechte(basename(__FILE__), $uid)){
 }
 require_once "../language/german.inc.php";
 
-
-
-
-if(isset($_GET['action'])){
-  $action = $_GET['action'];
-}else{
-  $action = '';
-}
-
-if($action == ''){
-
        if(isset($_GET['editcsid']) and $_GET['editcsid'] != ''){
          # Aus externer Seite edit_user.php
          #echo "<br><br><br><br><br><br><br><br>-----------------------------------------------hier";
@@ -66,18 +55,23 @@ if($action == ''){
           }
           $value[] = $row;
          }
+         if(isset($value)){
          $smarty->assign('table_data', $value);
-       
-       
-       
+         }
+       }else{
+         $smarty->assign('create_edit', '');
+         $smarty->assign('member_anlegen_vorname', '');
+         $smarty->assign('member_anlegen_nachname', '');
+         $smarty->assign('member_anlegen_mail', '');
+         $smarty->assign('member_anlegen_singstimme', '');
+         $smarty->assign('member_anlegen_bemerkung', '');
+         $smarty->assign('member_anlegen_einw_livestream', '');
+         $smarty->assign('member_anlegen_einw_homepage', '');
+         $smarty->assign('member_anlegen_einw_socialmedia', '');
+         $smarty->assign('member_anlegen_alter16', '');
+         $smarty->assign('member_anlegen_selfreg_date_form', '');
+         $smarty->assign('admin_rolle', '');
        }
-       
 
-
-}
-
-
-
-$smarty->assign('action', "$action");
 $smarty->display("$template/dashboard/$templatename");
 ?>

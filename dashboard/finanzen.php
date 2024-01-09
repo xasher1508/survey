@@ -74,7 +74,9 @@ while ($row = $result->fetch_array())
     $row['inner'] = $value2;
     $table_data[] = $row;
 }
-$smarty->assign('table_data', $table_data);
+if(isset($table_data)){
+ $smarty->assign('table_data', $table_data);
+}
 
 #echo "<pre>";
 #print_r($table_data);
@@ -114,9 +116,18 @@ if (isset($_GET['editfid']) and $_GET['editfid'] != '')
         $row10['orginalname_short'] = $datei_short;
         $value[] = $row10;
     }
-    $smarty->assign('table_data2', $value);
+    if(isset($value)){
+     $smarty->assign('table_data2', $value);
+    }
+}else{
+  $smarty->assign('create_edit', '');
+  $smarty->assign('finanzen_datum', '');
+  $smarty->assign('finanzen_beschreibung', '');
+  $smarty->assign('finanzen_firma', '');
+  $smarty->assign('finanzen_art', '');
+  $smarty->assign('finanzen_betrag', '');
+  $smarty->assign('finanzen_bemerkung', '');
 }
 
-$smarty->assign('action', "$action");
 $smarty->display("modern/dashboard/$templatename");
 ?>

@@ -15,15 +15,6 @@ require_once "../language/german.inc.php";
 
 
 
-if (isset($_GET['action'])) {
-    $action = $_GET['action'];
-} else {
-    $action = '';
-}
-
-
-if ($action == '') {
-
       # Gespeicherte Werte
       $query = "SELECT zsid, bezeichnung, lizenzpflicht, anzahl_lizenz
                   FROM jumi_noten_zusammenstellung 
@@ -49,12 +40,6 @@ if ($action == '') {
       }
       $smarty->assign('table_data', $table_data);
       $smarty->assign('admin_rolle', rolle($uid));
-    
-}
 
-
-
-$smarty->assign('action', "$action");
 $smarty->display("$template/dashboard/$templatename");
-
 ?>
