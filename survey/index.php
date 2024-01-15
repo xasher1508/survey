@@ -13,8 +13,15 @@ $smarty       = new SmartyAdmin();
 $templatename = substr(basename($_SERVER['PHP_SELF']), 0, -3) . "html";
 require_once "../language/german.inc.php";
 
+$db = dbconnect();
+$session = session_id();
+$ip      = $_SERVER["REMOTE_ADDR"];
 
-$action = $_GET['action'];
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+} else {
+    $action = '';
+}
 
 if ($action == '') {
   $db = dbconnect();
@@ -42,7 +49,7 @@ if ($action == '') {
                                   AND ip = '$ip'
                                   AND session = '$session'");
     $result_ende    = $result_ende->fetch_array();
-    if($_GET['error'] == 1 OR $result_ende['Anz'] > 0){
+    if((isset($_GET['error']) AND $_GET['error'] == 1) OR $result_ende['Anz'] > 0){
       $smarty->assign('umfrage_ende', "1");
     }else{
       $smarty->assign('umfrage_ende', "0");
@@ -51,9 +58,7 @@ if ($action == '') {
 }
 
 if ($action == 'umfrage') {
-    $db = dbconnect();
-        $session = session_id();
-        $ip      = $_SERVER["REMOTE_ADDR"];    
+
     
     // Datendefinition
     
@@ -123,13 +128,21 @@ if ($action == 'umfrage') {
                                 VALUES ('$umid', '$ip', '$session', '$freitext')
                               ");
         }
-        
-        if ($_POST['exit'] == '1') {
+        if(isset($_POST['exit'])){
+          $exitsurvey = $_POST['exit'];
+        }else{
+          $exitsurvey =0;
+        }
+        if ($exitsurvey == '1') {
             $smarty->assign('umfrage_showende', "1");
             $sql1     = $db->query("INSERT INTO jumi_umfragen_ende (umid, ip, session, ende)
                                 VALUES ('$umid', '$ip', '$session', '1')
                               ");
+        }else{
+        $smarty->assign('umfrage_showende', "0");
         }
+    }else{
+    $smarty->assign('umfrage_showende', "0");
     }
     
     $rowperpage = 1;
@@ -226,7 +239,11 @@ if ($action == 'umfrage') {
                                     AND ip = '$ip'
                                     AND session = '$session'");
         $row_antw    = $result_antw->fetch_array();
+        if(isset($row_antw['freitext'])){
         $smarty->assign('umfrage_value_freitext', "$row_antw[freitext]");
+        }else{
+        $smarty->assign('umfrage_value_freitext', '');
+        }
 
         $result_head = $db->query("SELECT freitext_headline
                                    FROM jumi_umfragen
@@ -281,7 +298,9 @@ if ($action == 'umfrage') {
         
         $table_data[] = $row;
     }
-    $smarty->assign('table_data', $table_data);
+    if(isset($table_data)){
+      $smarty->assign('table_data', $table_data);
+    }
     
     #echo"<pre>";
     #print_r($table_data);
