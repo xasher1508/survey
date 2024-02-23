@@ -1,0 +1,16 @@
+Error 2: get_headers(): php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: get_headers(https://www.ju-and-mi.de/msd): Failed to open stream: php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: get_headers(): php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: get_headers(https://www.ju-and-mi.de/msd): Failed to open stream: php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: get_headers(): php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: get_headers(https://www.ju-and-mi.de/msd): Failed to open stream: php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: get_headers(): php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: get_headers(https://www.ju-and-mi.de/msd): Failed to open stream: php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: filesize(): stat failed for work/log/myoosdumper.log.gz in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions_global.php on line 281
+Error 2: get_headers(): php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: get_headers(https://www.ju-and-mi.de/msd): Failed to open stream: php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: get_headers(): php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: get_headers(https://www.ju-and-mi.de/msd): Failed to open stream: php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: get_headers(): php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: get_headers(https://www.ju-and-mi.de/msd): Failed to open stream: php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mide/msd/inc/functions.php on line 791
+Error 2: filesize(): stat failed for work/log/error.log.gz in /var/www/vhosts/h607476.web311.dogado.net/ju-and-mi.de/msd/inc/functions.php on line 680

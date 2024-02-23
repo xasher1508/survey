@@ -1,11 +1,14 @@
- <?php
+<?php
+set_time_limit(300);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 include_once ('Directory_Backup_Service.php'); 
 
 $fileBackup = new Directory_Backup_Service( );
 
 // Backup erstellen
-$fileBackup->startBackup( '../../survey/', 'survey' ); 
+$fileBackup->startBackup( '../../ju-and-mide/', 'survey' ); 
 
 // FTP-Upload starten
 $infoF = $fileBackup->curlUpload( ); 
@@ -16,10 +19,10 @@ foreach($files as $file){ // iterate files
   }
 }
 
-echo 'Dateigröße: ' . $infoF['size_upload'] . '<br>';
+echo 'Dateigr&ouml;&szlig;e: ' . $infoF['size_upload'] . '<br>';
 echo 'Geschwindigkeit: ' . $infoF['speed_upload'] . '<br>';
 echo 'Gesamtzeit: ' . $infoF['total_time'] . '<br><br>';
 
-//print_r($infoF);
+print_r($infoF);
 
 ?>  

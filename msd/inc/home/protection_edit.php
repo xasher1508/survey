@@ -1,25 +1,28 @@
 <?php
-/* ----------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
 
    MyOOS [Dumper]
-   http://www.oos-shop.de/
+   https://www.oos-shop.de/
 
-   Copyright (c) 2013 - 2022 by the MyOOS Development Team.
+   Copyright (c) 2013 - 2023 by the MyOOS Development Team.
    ----------------------------------------------------------------------
    Based on:
 
    MySqlDumper
-   http://www.mysqldumper.de
+   https://www.mysqldumper.de
 
    Copyright (C)2004-2011 Daniel Schlichtholz (admin@mysqldumper.de)
    ----------------------------------------------------------------------
    Released under the GNU General Public License
-   ---------------------------------------------------------------------- */
+   ----------------------------------------------------------------------
+ */
 
 if (!defined('MOD_VERSION')) {
     exit('No direct access.');
 }
-include './language/'.$config['language'].'/lang_sql.php';
+global $config;
+require './language/'.$config['language'].'/lang_sql.php';
 echo MODHeader();
 echo headline($lang['L_HTACC_EDIT']);
 
@@ -32,7 +35,7 @@ if (isset($_POST['hta_dir']) && isset($_POST['hta_file']) && is_dir($_POST['hta_
     $hta_dir = $config['paths']['root'];
     $hta_file = '.htaccess';
 }
-if ('' != $hta_dir & '/' != substr($hta_dir, -1)) {
+if ('' != $hta_dir & !str_ends_with((string) $hta_dir, '/')) {
     $hta_dir .= '/';
 }
 $hta_complete = $hta_dir.$hta_file;
@@ -45,7 +48,7 @@ if ((isset($_GET['create']) && 1 == $_GET['create']) || (isset($_POST['create'])
 
 if (isset($_POST['submit']) && isset($_POST['thta'])) {
     $fp = fopen($hta_complete, 'w');
-    fwrite($fp, $_POST['thta']);
+    fwrite($fp, (string) $_POST['thta']);
     fclose($fp);
 }
 if (file_exists($hta_complete)) {

@@ -37,7 +37,7 @@ my $pcd_version='5.0.20';
 # e.g. - (zum Beispiel): 
 # my $absolute_path_of_configdir="/home/www/doc/8176/example.org/www/myoosdumper/work/config/";
 
-my $absolute_path_of_configdir="/var/www/web360/htdocs/survey/msd/work/config/";
+my $absolute_path_of_configdir="/var/www/vhosts/h607476.web311.dogado.net/ju-and-mi.de/msd/work/config/";
 my $cgibin_path=""; # this is needed for MIME::Lite if it is in cgi-bin
 my $default_configfile="myoosdumper.conf.php";
 

@@ -1,4 +1,5 @@
 <?php
+set_time_limit(300);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 #echo __LINE__."<br>";
