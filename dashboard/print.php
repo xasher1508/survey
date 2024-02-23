@@ -61,7 +61,7 @@ while ($row = $result->fetch_array()){
       $pdf->Cell( 0, 10, "$row[liednr]", 0, 0, 'R' ); 
     }
       $pdf->SetFont('Arial','B',10);
-      $pdf->SetY(-7); 
+      $pdf->SetY(-6); 
       $pdf->Cell( 0, 0, "- ".iconv("UTF-8", "ISO-8859-1", $row['titel'])." ($i/$pages_count) -", 0, 0, 'C' ); 
       #$pdf->Write(0, "$i"); 
   }
