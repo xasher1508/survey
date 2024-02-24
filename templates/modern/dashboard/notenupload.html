@@ -145,9 +145,9 @@
 						                  </td>
 						                  <td class="d-none d-lg-table-cell">{$table_data[table_data].uploaddatum}</td>
 						                  <td>
-                                            <label><input class="form-check-input" type="radio" name="pdfart" value="N" {if $table_data[table_data].pdfart == 'N'}checked{/if} onclick="alterArt({$table_data[table_data].id}, 'N')" id="pdfart"> Noten</label><br>
-                                            <label><input class="form-check-input" type="radio" name="pdfart" value="R" {if $table_data[table_data].pdfart == 'R'}checked{/if} onclick="alterArt({$table_data[table_data].id}, 'R')" id="pdfart"> Rechnung</label><br>
-                                            <label><input class="form-check-input" type="radio" name="pdfart" value="S" {if $table_data[table_data].pdfart == 'S'}checked{/if} onclick="alterArt({$table_data[table_data].id}, 'S')" id="pdfart"> Sonstiges</label><br>
+                                            <label><input class="form-check-input" type="radio" name="pdfart_{$table_data[table_data].id}" value="N" {if $table_data[table_data].pdfart == 'N'}checked{/if} onclick="alterArt({$table_data[table_data].id}, 'N')" id="pdfart_{$table_data[table_data].id}"> Noten</label><br>
+                                            <label><input class="form-check-input" type="radio" name="pdfart_{$table_data[table_data].id}" value="R" {if $table_data[table_data].pdfart == 'R'}checked{/if} onclick="alterArt({$table_data[table_data].id}, 'R')" id="pdfart_{$table_data[table_data].id}"> Rechnung</label><br>
+                                            <label><input class="form-check-input" type="radio" name="pdfart_{$table_data[table_data].id}" value="S" {if $table_data[table_data].pdfart == 'S'}checked{/if} onclick="alterArt({$table_data[table_data].id}, 'S')" id="pdfart_{$table_data[table_data].id}"> Sonstiges</label><br>
 						                  </td>
 						                  {if $admin_rolle == 1}
 						                  <td><a class="btn btn-danger  btn-rounded btn-icon btn-sm" onclick="delNotenFile({$table_data[table_data].id})"><i class="fa fa-trash" style="width:18px;"></i></a></td>

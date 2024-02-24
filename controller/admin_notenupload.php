@@ -92,7 +92,6 @@ if ($function == 'save_with_files')
                                                               , vid
                                                               , anz_lizenzen
                                                               , streamlizenz
-                                                              , pdfart
                                                               , bemerkung
                                                               , uid
                                                               , datum
@@ -103,7 +102,6 @@ if ($function == 'save_with_files')
                                                               , '$vid'
                                                               , '$anz_lizenzen'
                                                               , '$streamlizenz'
-                                                              , '$pdfart'
                                                               , '$bemerkung'
                                                               , $uid
                                                               , '$datum'
@@ -119,11 +117,10 @@ if ($function == 'save_with_files')
                                           ,vid = '$vid'
                                           ,anz_lizenzen = '$anz_lizenzen'
                                           ,streamlizenz = '$streamlizenz'
-                                          ,pdfart = '$pdfart'
                                           ,bemerkung = '$bemerkung'
                                           ,uid = '$uid'
                                           ,datum = '$datum'
-                                     WHERE jndid_ = $jndid_edit
+                                     WHERE jndid = $jndid_edit
                                   " );
                $jndid = $jndid_edit;
                
@@ -147,6 +144,7 @@ if ($function == 'save_with_files')
             $sql2 = $db->query("INSERT INTO jumi_noten_uploads ( jndid
                                                               , filename
                                                               , originalname
+                                                              , pdfart
                                                               , uid
                                                               , datum
                                                               )
@@ -154,6 +152,7 @@ if ($function == 'save_with_files')
                                                               ( $jndid
                                                               , '$vpb_final_location'
                                                               , '$originalname'
+                                                              , '$pdfart'
                                                               , $uid
                                                               , '$datum'
                                                               )
