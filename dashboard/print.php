@@ -18,6 +18,7 @@ if($art == 'B'){
                AND a.jndid=b.jndid
                AND c.zsid=$zsid
                AND lower(filename) LIKE '%.pdf'
+               AND pdfart='N'
              ORDER BY CAST(liednr AS UNSIGNED), liednr";
   $result = $db->query ($query)
    or die ("Cannot execute query");

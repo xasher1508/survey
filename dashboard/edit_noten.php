@@ -56,7 +56,8 @@ require_once "../language/german.inc.php";
           
           $result_link = $db->query("SELECT filename
                                      FROM jumi_noten_uploads
-                                    WHERE jndid=$row[jndid]");
+                                    WHERE jndid=$row[jndid]
+                                      AND pdfart='N'");
           $row_link    = $result_link->fetch_array();
           if(isset($row_link['filename'])){
             $filename = $row_link['filename'];

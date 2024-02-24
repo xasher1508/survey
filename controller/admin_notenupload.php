@@ -20,6 +20,7 @@ if ($function == 'save_with_files')
         }
         $anz_lizenzen = $_POST['anz_lizenzen'];
         $streamlizenz = $_POST['streamlizenz'];
+        $pdfart = $_POST['pdfart'];
         $bemerkung   = $db->real_escape_string(stripslashes( $_POST['bemerkung'] ));
 
         $datum_file = date("Ymd_His_");
@@ -91,6 +92,7 @@ if ($function == 'save_with_files')
                                                               , vid
                                                               , anz_lizenzen
                                                               , streamlizenz
+                                                              , pdfart
                                                               , bemerkung
                                                               , uid
                                                               , datum
@@ -101,6 +103,7 @@ if ($function == 'save_with_files')
                                                               , '$vid'
                                                               , '$anz_lizenzen'
                                                               , '$streamlizenz'
+                                                              , '$pdfart'
                                                               , '$bemerkung'
                                                               , $uid
                                                               , '$datum'
@@ -116,6 +119,7 @@ if ($function == 'save_with_files')
                                           ,vid = '$vid'
                                           ,anz_lizenzen = '$anz_lizenzen'
                                           ,streamlizenz = '$streamlizenz'
+                                          ,pdfart = '$pdfart'
                                           ,bemerkung = '$bemerkung'
                                           ,uid = '$uid'
                                           ,datum = '$datum'
@@ -294,6 +298,32 @@ if ($function == 'delNotenFile') {
       exit;
     }
 }
+
+if ($function == 'alterArt') {
+  if (isset($_POST['id'])) {
+    $id = $_POST['id'];
+  }
+  if (isset($_POST['art'])) {
+    $art = $_POST['art'];
+  }
+  
+    $result0 = $db->query("SELECT filename, jndid
+                             FROM jumi_noten_uploads
+                            WHERE id = $id;");
+    $row0    = $result0->fetch_array();
+  
+    
+    $stmt1    = $db->query("UPDATE jumi_noten_uploads SET pdfart='$art' WHERE id= $id");
+    
+    if ($stmt1) {
+      echo "<div class='alert alert-success'><i class='fa fa-fw fa-thumbs-up'></i> Die Art wurde geändert!</div>|***|success|***|".$row0['jndid'];
+      exit;
+    } else {
+      echo '<div class="alert alert-danger"><i class="fa fa-fw fa-thumbs-down"></i> Die ARt wurde nicht geändert!</div>|***|success|***|'.$row0['jndid'];
+      exit;
+    }
+}
+
 
 if ($function == 'delNoten') {
   if (isset($_POST['jndid'])) {

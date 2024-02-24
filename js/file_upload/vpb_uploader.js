@@ -194,6 +194,7 @@ function vpb_multiple_file_uploader(vpb_configuration_settings) {
                 var verlag = document.getElementById("verlag").value;
                 var anz_lizenzen = document.getElementById("anz_lizenzen").value;
                 var streamlizenz = $("input[type='radio'][name='streamlizenz']:checked").val();
+                var pdfart = $("input[type='radio'][name='pdfart']:checked").val();
                 var bemerkung =tinyMCE.get('bemerkung').getContent()
                 // jndid beim Bearbeiten von Noten
                 var jndid_edit = document.getElementById("jndid").value;
@@ -202,6 +203,7 @@ function vpb_multiple_file_uploader(vpb_configuration_settings) {
                 dataString.append('verlag', verlag);
                 dataString.append('anz_lizenzen', anz_lizenzen);
                 dataString.append('streamlizenz', streamlizenz);
+                dataString.append('pdfart', pdfart);
                 dataString.append('bemerkung', bemerkung);
                 dataString.append('jndid_edit', jndid_edit);
                 dataString.append('function', 'save_with_files');
@@ -302,6 +304,7 @@ function vpb_multiple_file_uploader(vpb_configuration_settings) {
         var verlag = document.getElementById("verlag").value;
         var anz_lizenzen = document.getElementById("anz_lizenzen").value;
         var streamlizenz = $("input[type='radio'][name='streamlizenz']:checked").val();
+        var pdfart = $("input[type='radio'][name='pdfart']:checked").val();
         var bemerkung =tinyMCE.get('bemerkung').getContent()
         // jndid beim Bearbeiten von Noten
         var jndid_edit = document.getElementById("jndid").value;
@@ -316,6 +319,7 @@ function vpb_multiple_file_uploader(vpb_configuration_settings) {
                 'verlag': verlag,
                 'anz_lizenzen': anz_lizenzen,
                 'streamlizenz': streamlizenz,
+                'pdfart': pdfart,
                 'bemerkung': bemerkung,
                 'jndid_edit': jndid_edit
             },
@@ -422,4 +426,36 @@ function delNoten(jndid) {
             }
         });
     }
+}
+
+
+function alterArt(id, art) {
+
+        $.ajax({
+            type: 'POST',
+            url: '../controller/admin_notenupload.php',
+            data: {
+                'function': 'alterArt',
+                'id': id,
+                'art': art
+            },
+            success: function(result) { //we got the response
+              if(result!=''){
+                var a = result.split('|***|');
+                if(a[1]=="success"){
+                  $(document).ajaxStop(function(){
+                   setTimeout(function() {
+				      window.location = "";
+				    }, 2000);
+                  });
+                }
+                $('#msg').show().delay(10000).fadeOut(500);
+                $('#msg').html(a[0]);
+		      }
+            },
+            error: function(xhr, status, exception) {
+                console.log(xhr);
+            }
+        });
+
 }

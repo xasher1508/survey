@@ -127,6 +127,7 @@
 						                 <tr>
 						                    <th style="color:blue; text-align:center;">Datei</th>
 						                    <th  class="d-none d-lg-table-cell" style="color:blue; text-align:center;">Uploaddatum</th>
+						                    <th style="color:blue; text-align:center;">Art</th>
 						                    {if $admin_rolle == 1}
 						                    <th style="color:blue; text-align:center;">Aktion</th>
 						                    {/if}
@@ -143,6 +144,11 @@
 						                    {/if}
 						                  </td>
 						                  <td class="d-none d-lg-table-cell">{$table_data[table_data].uploaddatum}</td>
+						                  <td>
+                                            <label><input class="form-check-input" type="radio" name="pdfart" value="N" {if $table_data[table_data].pdfart == 'N'}checked{/if} onclick="alterArt({$table_data[table_data].id}, 'N')" id="pdfart"> Noten</label><br>
+                                            <label><input class="form-check-input" type="radio" name="pdfart" value="R" {if $table_data[table_data].pdfart == 'R'}checked{/if} onclick="alterArt({$table_data[table_data].id}, 'R')" id="pdfart"> Rechnung</label><br>
+                                            <label><input class="form-check-input" type="radio" name="pdfart" value="S" {if $table_data[table_data].pdfart == 'S'}checked{/if} onclick="alterArt({$table_data[table_data].id}, 'S')" id="pdfart"> Sonstiges</label><br>
+						                  </td>
 						                  {if $admin_rolle == 1}
 						                  <td><a class="btn btn-danger  btn-rounded btn-icon btn-sm" onclick="delNotenFile({$table_data[table_data].id})"><i class="fa fa-trash" style="width:18px;"></i></a></td>
 						                  {/if}
@@ -162,6 +168,14 @@
                                        <input class="form-control" type="file" name="vasplus_multiple_files" id="vasplus_multiple_files" multiple="multiple">
                                     </div>
                                  </label>
+                              </div>
+                              <div class="row mt-2 mt-sm-4 mb-2 mb-sm-4">
+                                 <div class="col-8 col-md-4">Art:</div>
+                                 <div class="col-4 col-md-8">
+                                       <label><input class="form-check-input" type="radio" name="pdfart" value="N" id="pdfart"> Noten</label><br>
+                                       <label><input class="form-check-input" type="radio" name="pdfart" value="R" id="pdfart"> Rechnung</label><br>
+                                       <label><input class="form-check-input" type="radio" name="pdfart" value="S" id="pdfart"> Sonstiges</label>
+                                 </div>
                               </div>
                               <table class="table table-striped table-bordered" id="add_files">
                                  <thead>

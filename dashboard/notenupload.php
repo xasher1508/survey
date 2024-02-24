@@ -30,10 +30,11 @@ require_once "../language/german.inc.php";
          $smarty->assign('notenupload_liednr', $row0['liednr']);
          $smarty->assign('notenupload_anz_lizenzen', $row0['anz_lizenzen']);
          $smarty->assign('notenupload_streamlizenz', $row0['streamlizenz']);
+         
          $smarty->assign('notenupload_bemerkung', $row0['bemerkung']);
          $smarty->assign('notenupload_verlag', $row0['verlag']);
          
-         $query = "SELECT id, filename, originalname, date_format(datum, '%d.%m.%y - %H:%i') uploaddatum FROM jumi_noten_uploads WHERE jndid='$jndid' ORDER BY datum DESC";
+         $query = "SELECT id, filename, originalname, date_format(datum, '%d.%m.%y - %H:%i') uploaddatum, pdfart FROM jumi_noten_uploads WHERE jndid='$jndid' ORDER BY datum DESC";
          $result = $db->query( $query)
                    or die ("Cannot execute query1");
 
