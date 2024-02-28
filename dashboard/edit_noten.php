@@ -110,7 +110,7 @@ while ($row = $result->fetch_array())
     $files = "";
     while ($row2 = $result2->fetch_array())
     {
-        $files .= "<a href='$row2[filename]' target='_new'><img src='../templates/modern/images/ico_pdf.gif' alt='$row2[originalname]'></a><br>";
+        $files .= "<a href='".$row2['filename']."' target='_new'><img src='../templates/modern/images/ico_pdf.gif' alt='".$row2['originalname']."'></a><br>";
     }
 #    echo "<pre>";
 #    echo $files;
