@@ -101,7 +101,7 @@ while ($row = $result->fetch_array())
         $songbook .= "$row1[bezeichnung], ";
     }
     $songbook = substr($songbook, 0, -2);
-    
+
     $query2 = "SELECT filename, originalname, pdfart
                  FROM jumi_noten_uploads
                 WHERE jndid=$row[jndid]
@@ -110,15 +110,18 @@ while ($row = $result->fetch_array())
     $files = "";
     while ($row2 = $result2->fetch_array())
     {
-      if($row2['pdfart'] == 'R'){
-        $files .= "<a href='".$row2['filename']."' target='_new'>Rechnung: <img src='../templates/modern/images/ico_pdf.gif' alt='Rechnung: ".$row2['originalname']."'></a><br>";
-      }else if($row2['pdfart'] == 'S'){
-        $files .= "<a href='".$row2['filename']."' target='_new'>Sonstige: <img src='../templates/modern/images/ico_pdf.gif' alt='Sonstige: ".$row2['originalname']."'></a><br>";
-      }
+        if ($row2['pdfart'] == 'R')
+        {
+            $files .= "<a href='" . $row2['filename'] . "' target='_new'>Rechnung: <img src='../templates/modern/images/ico_pdf.gif' alt='Rechnung: " . $row2['originalname'] . "'></a><br>";
+        }
+        else if ($row2['pdfart'] == 'S')
+        {
+            $files .= "<a href='" . $row2['filename'] . "' target='_new'>Sonstige: <img src='../templates/modern/images/ico_pdf.gif' alt='Sonstige: " . $row2['originalname'] . "'></a><br>";
+        }
     }
-#    echo "<pre>";
-#    echo $files;
-#    echo "</pre>";
+    #    echo "<pre>";
+    #    echo $files;
+    #    echo "</pre>";
     $row['restlizenz'] = $row_rl['Rest'];
     $row['liednr'] = $liednr;
     $row['link'] = $filename;
