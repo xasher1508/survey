@@ -111,9 +111,9 @@ while ($row = $result->fetch_array())
     while ($row2 = $result2->fetch_array())
     {
       if($row2['pdfart'] == 'R'){
-        $files .= "<a href='".$row2['filename']."' target='_new'><img src='../templates/modern/images/ico_pdf.gif' alt='Rechnung: ".$row2['originalname']."'></a><br>";
+        $files .= "<a href='".$row2['filename']."' target='_new'>Rechnung: <img src='../templates/modern/images/ico_pdf.gif' alt='Rechnung: ".$row2['originalname']."'></a><br>";
       }else if($row2['pdfart'] == 'S'){
-        $files .= "<a href='".$row2['filename']."' target='_new'><img src='../templates/modern/images/ico_pdf.gif' alt='Sonstige: ".$row2['originalname']."'></a><br>";
+        $files .= "<a href='".$row2['filename']."' target='_new'>Sonstige: <img src='../templates/modern/images/ico_pdf.gif' alt='Sonstige: ".$row2['originalname']."'></a><br>";
       }
     }
 #    echo "<pre>";
