@@ -108,13 +108,13 @@ while ($row = $result->fetch_array())
                   AND pdfart!='N'";
     $result2 = $db->query($query2) or die("Cannot execute query2");
     $files = "";
-    while ($row2 = $result1->fetch_array())
+    while ($row2 = $result2->fetch_array())
     {
         $files .= "<a href='$row2[filename]' target='_new'><img src='../templates/modern/images/ico_pdf.gif' alt='$row2[originalname]'></a><br>";
     }
-    echo "<pre>";
-    echo $files;
-    echo "</pre>";
+#    echo "<pre>";
+#    echo $files;
+#    echo "</pre>";
     $row['restlizenz'] = $row_rl['Rest'];
     $row['liednr'] = $liednr;
     $row['link'] = $filename;
