@@ -101,12 +101,25 @@ while ($row = $result->fetch_array())
         $songbook .= "$row1[bezeichnung], ";
     }
     $songbook = substr($songbook, 0, -2);
+    
+    $query2 = "SELECT filename, originalname
+                 FROM jumi_noten_uploads
+                WHERE jndid=$row[jndid]
+                  AND pdfart!='N'";
+    $result2 = $db->query($query2) or die("Cannot execute query2");
+    $files = "";
+    while ($row2 = $result1->fetch_array())
+    {
+        $files .= "<a href='$row2[filename]' target='_new'><img src='../templates/modern/images/ico_pdf.gif' alt='$row2[originalname]'></a><br>";
+    }
+    
     $row['restlizenz'] = $row_rl['Rest'];
     $row['liednr'] = $liednr;
     $row['link'] = $filename;
     $row['fileexists'] = $fileexists;
     $row['songbook'] = $songbook;
-    $row['streamlizenz_vorh'] = $streamlizenz_vorh;
+    $row['songbook'] = $songbook;
+    $row['files'] = $files;
     $value[] = $row;
 }
 $smarty->assign('table_data', $value);
