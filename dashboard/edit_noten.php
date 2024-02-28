@@ -112,7 +112,9 @@ while ($row = $result->fetch_array())
     {
         $files .= "<a href='$row2[filename]' target='_new'><img src='../templates/modern/images/ico_pdf.gif' alt='$row2[originalname]'></a><br>";
     }
-    
+    echo "<pre>";
+    echo $files;
+    echo "</pre>";
     $row['restlizenz'] = $row_rl['Rest'];
     $row['liednr'] = $liednr;
     $row['link'] = $filename;
