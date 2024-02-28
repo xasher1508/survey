@@ -102,7 +102,7 @@ while ($row = $result->fetch_array())
     }
     $songbook = substr($songbook, 0, -2);
     
-    $query2 = "SELECT filename, originalname
+    $query2 = "SELECT filename, originalname, pdfart
                  FROM jumi_noten_uploads
                 WHERE jndid=$row[jndid]
                   AND pdfart!='N'";
@@ -110,7 +110,11 @@ while ($row = $result->fetch_array())
     $files = "";
     while ($row2 = $result2->fetch_array())
     {
-        $files .= "<a href='".$row2['filename']."' target='_new'><img src='../templates/modern/images/ico_pdf.gif' alt='".$row2['originalname']."'></a><br>";
+      if($row2['pdfart'] == 'R'){
+        $files .= "<a href='".$row2['filename']."' target='_new'><img src='../templates/modern/images/ico_pdf.gif' alt='Rechnung: ".$row2['originalname']."'></a><br>";
+      }else if($row2['pdfart'] == 'S'){
+        $files .= "<a href='".$row2['filename']."' target='_new'><img src='../templates/modern/images/ico_pdf.gif' alt='Sonstige: ".$row2['originalname']."'></a><br>";
+      }
     }
 #    echo "<pre>";
 #    echo $files;

@@ -69,6 +69,7 @@
         <thead>
           <tr>
             <th>Titel</th>
+            <th class="d-none d-md-table-cell">Dokumente</th>
             <th>Liednummer</th>
             <th class="d-none d-md-table-cell">Verlag</th>
             <th>Songbook</th>
@@ -87,7 +88,10 @@
                            data-bs-content="{$table_data[table_data].bemerkung}">
                         <i class="fa fa-info-circle"></i>
                         </a>
-                        {/if}&nbsp;{$table_data[table_data].files}
+                        {/if}
+            </td>
+            <td class="d-none d-md-table-cell">
+            {$table_data[table_data].files}
             </td>
             <td>{$table_data[table_data].liednr}</td>
             <td class="d-none d-md-table-cell">{$table_data[table_data].verlag}</td>
