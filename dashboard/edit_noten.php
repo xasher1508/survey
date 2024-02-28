@@ -126,6 +126,7 @@ while ($row = $result->fetch_array())
     $row['songbook'] = $songbook;
     $row['songbook'] = $songbook;
     $row['files'] = $files;
+    $row['streamlizenz_vorh'] = $streamlizenz_vorh;
     $value[] = $row;
 }
 $smarty->assign('table_data', $value);
