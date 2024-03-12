@@ -17,8 +17,8 @@ Linearea gibt an, ob linke, rechte, obere oder untere Rahmen angezeigt werden so
 class MYPDF extends FPDI
 {
     // Margins
-    var $left = 20;
-    var $right = 10;
+    var $left = 15;
+    var $right = 15;
     var $top = 10;
     var $bottom = 10;
 
@@ -168,6 +168,7 @@ class MYPDF extends FPDI
 
 }
 
+
 $pdf = new MYPDF('P', 'mm', 'A4');
 $pdf->SetAutoPageBreak(false);
 $pdf->AliasNbPages();
@@ -177,59 +178,157 @@ $pdf->AddPage();
 // create table
 $columns = array();
 
-$zsid = $_GET['zsid'];
-$query = "SELECT liednr, titel
-              FROM jumi_noten_daten a, jumi_noten_zusammenstellung_zuord b
-             WHERE a.jndid=b.jndid
-               AND b.zsid=$zsid
-             ORDER BY titel";
+$query = "SELECT a.jndid, titel, liednr, anz_lizenzen, streamlizenz, bemerkung, c.bezeichnung verlag
+                    FROM jumi_noten_daten a, jumi_noten_verlag c
+                   WHERE a.vid=c.vid
+                   ORDER BY titel ASC";
 #ORDER BY CAST(liednr AS UNSIGNED), liednr
 $result = $db->query($query) or die("Cannot execute query");
-$query_titel = $db->query("SELECT bezeichnung
-                                FROM jumi_noten_zusammenstellung
-                               WHERE zsid =$zsid");
-$row_titel = $query_titel->fetch_array();
 
-$pdf->Image('../media/qr_liedordner2.png', 18, 7, 20, 20);
 $pdf->SetFont('Arial', 'B', 20);
 $pdf->SetTextColor(13, 115, 119);
-$pdf->Cell(0, 3, "Inhaltsverzeichnis", 0, 0, 'C');
+$pdf->Cell(0, 3, "Liederverzeichnis", 0, 0, 'C');
 $pdf->SetFont('Arial', '', 10);
-$pos = $pdf->GetY() + 5;
-$pdf->SetY($pos);
-$pdf->Cell(0, 3, "(Aktuelles Inhaltsverzeichnis findest Du beim Aufruf des QR-Codes)", 0, 0, 'C');
 $pos = $pdf->GetY() + 15;
 $pdf->SetY($pos);
+
+$fil = array();
+$fil[] = array(
+    'text' => "Titel",
+    'width' => '80',
+    'height' => '7',
+    'align' => 'L',
+    'font_name' => 'Arial',
+    'font_size' => '10',
+    'font_style' => '',
+    'fillcolor' => '255,255,255',
+    'textcolor' => '0,0,0',
+    'drawcolor' => '0,0,0',
+    'linewidth' => '0.2',
+    'linearea' => 'LTBR'
+);
+$fil[] = array(
+    'text' => "LiedNr",
+    'width' => '20',
+    'height' => '7',
+    'align' => 'L',
+    'font_name' => 'Arial',
+    'font_size' => '10',
+    'font_style' => '',
+    'fillcolor' => '255,255,255',
+    'textcolor' => '0,0,0',
+    'drawcolor' => '0,0,0',
+    'linewidth' => '0.2',
+    'linearea' => 'LTBR'
+);
+$fil[] = array(
+    'text' => "Restlizenz",
+    'width' => '30',
+    'height' => '7',
+    'align' => 'L',
+    'font_name' => 'Arial',
+    'font_size' => '10',
+    'font_style' => '',
+    'fillcolor' => '255,255,255',
+    'textcolor' => '0,0,0',
+    'drawcolor' => '0,0,0',
+    'linewidth' => '0.2',
+    'linearea' => 'LTBR'
+);
+$fil[] = array(
+    'text' => "Verlag",
+    'width' => '50',
+    'height' => '7',
+    'align' => 'L',
+    'font_name' => 'Arial',
+    'font_size' => '10',
+    'font_style' => '',
+    'fillcolor' => '255,255,255',
+    'textcolor' => '0,0,0',
+    'drawcolor' => '0,0,0',
+    'linewidth' => '0.2',
+    'linearea' => 'LTBR'
+);
+$filler[] = $fil;
+
+$pdf->WriteTable($filler);
+
 while ($row = $result->fetch_array())
 {
     $col = array();
+    if ($row['liednr'] == '')
+    {
+        $liednr = "";
+    }
+    elseif ($row['liednr'] == '0')
+    {
+        $liednr = "";
+    }
+    else
+    {
+        $liednr = $row['liednr'];
+    }
+
+    $result_rl = $db->query("SELECT $row[anz_lizenzen]-count(*) Rest
+                                     FROM jumi_noten_zus_saenger_zuord
+                                    WHERE zsid IN( SELECT zsid FROM jumi_noten_zusammenstellung_zuord WHERE jndid=$row[jndid])");
+    $row_rl = $result_rl->fetch_array();
+
     $col[] = array(
         'text' => iconv("UTF-8", "ISO-8859-1", $row['titel']) ,
-        'width' => '160',
+        'width' => '80',
         'height' => '7',
         'align' => 'L',
         'font_name' => 'Arial',
-        'font_size' => '12',
+        'font_size' => '10',
         'font_style' => '',
         'fillcolor' => '255,255,255',
         'textcolor' => '0,0,0',
         'drawcolor' => '0,0,0',
         'linewidth' => '0.2',
-        'linearea' => 'LTB'
+        'linearea' => 'LTBR'
     );
     $col[] = array(
-        'text' => $row['liednr'],
+        'text' => iconv("UTF-8", "ISO-8859-1", "$liednr") ,
         'width' => '20',
         'height' => '7',
         'align' => 'R',
         'font_name' => 'Arial',
-        'font_size' => '12',
+        'font_size' => '10',
         'font_style' => '',
         'fillcolor' => '255,255,255',
         'textcolor' => '0,0,0',
         'drawcolor' => '0,0,0',
         'linewidth' => '0.2',
-        'linearea' => 'TBR'
+        'linearea' => 'LTBR'
+    );
+    $col[] = array(
+        'text' => "$row_rl[Rest]/$row[anz_lizenzen]",
+        'width' => '30',
+        'height' => '7',
+        'align' => 'L',
+        'font_name' => 'Arial',
+        'font_size' => '10',
+        'font_style' => '',
+        'fillcolor' => '255,255,255',
+        'textcolor' => '0,0,0',
+        'drawcolor' => '0,0,0',
+        'linewidth' => '0.2',
+        'linearea' => 'LTBR'
+    );
+    $col[] = array(
+        'text' => iconv("UTF-8", "ISO-8859-1", $row['verlag']) ,
+        'width' => '50',
+        'height' => '7',
+        'align' => 'L',
+        'font_name' => 'Arial',
+        'font_size' => '10',
+        'font_style' => '',
+        'fillcolor' => '255,255,255',
+        'textcolor' => '0,0,0',
+        'drawcolor' => '0,0,0',
+        'linewidth' => '0.2',
+        'linearea' => 'LTBR'
     );
     $columns[] = $col;
 
@@ -238,31 +337,8 @@ while ($row = $result->fetch_array())
 // Draw Table
 $pdf->WriteTable($columns);
 
-$pos = $pdf->GetY();
-for ($i = $pos;$i < 270;$i++)
-{
-    $fil = array();
-    $fil[] = array(
-        'text' => "",
-        'width' => '180',
-        'height' => '7',
-        'align' => 'L',
-        'font_name' => 'Arial',
-        'font_size' => '12',
-        'font_style' => '',
-        'fillcolor' => '255,255,255',
-        'textcolor' => '0,0,0',
-        'drawcolor' => '0,0,0',
-        'linewidth' => '0.2',
-        'linearea' => 'LTBR'
-    );
-    $i = $i + 6;
-    $filler[] = $fil;
-}
-$pdf->WriteTable($filler);
-
 // Show PDF
 #$pdf->Output();
-$pdf->Output('I', iconv("UTF-8", "ISO-8859-1", $row_titel['bezeichnung']) . '_toc');
+$pdf->Output('I', iconv("UTF-8", "ISO-8859-1", 'Liedliste_toc'));
 
 ?>
