@@ -60,12 +60,12 @@
 								<thead>
 									<tr>
 										<th>Titel</th>
-										<th class="d-none d-md-table-cell">Dokumente</th>
-										<th>Liednummer</th>
-										<th class="d-none d-md-table-cell">Verlag</th>
-										<th>Songbook</th>
+										<th class="d-none d-xl-table-cell">Dokumente</th>
+										<th class="d-none d-md-table-cell">Liednummer</th>
+										<th class="d-none d-xl-table-cell">Verlag</th>
+										<th class="d-none d-md-table-cell">Songbook</th>
 										<th class="d-none d-md-table-cell"> Lizenzmenge</th>
-										<th class="d-none d-md-table-cell">Streamlizenz</th>
+										<th class="d-none d-xl-table-cell">Streamlizenz</th>
 										<th>Aktion</th>
 									</tr>
 								</thead>
@@ -73,12 +73,12 @@
 									<tr>
 										<td>{if $table_data[table_data].fileexists == 1}<a href="print.php?art=E&jndid={$table_data[table_data].jndid}" target='_new'>{$table_data[table_data].titel}</a>{else}{$table_data[table_data].titel}{/if} {if $table_data[table_data].bemerkung != ''}
 											<a href="javascript:void(0)" type="button" class="link-secondary" data-bs-toggle="popover" data-bs-html="true" data-bs-trigger="hover focus" title="Bemerkung" data-bs-content="{$table_data[table_data].bemerkung}"> <i class="fa fa-info-circle"></i> </a> {/if} </td>
-										<td class="d-none d-md-table-cell"> {$table_data[table_data].files} </td>
-										<td>{$table_data[table_data].liednr}</td>
-										<td class="d-none d-md-table-cell">{$table_data[table_data].verlag}</td>
-										<td>{$table_data[table_data].songbook}</td>
+										<td class="d-none d-xl-table-cell"> {$table_data[table_data].files} </td>
+										<td class="d-none d-md-table-cell">{$table_data[table_data].liednr}</td>
+										<td class="d-none d-xl-table-cell">{$table_data[table_data].verlag}</td>
+										<td class="d-none d-md-table-cell">{$table_data[table_data].songbook}</td>
 										<td class="d-none d-md-table-cell">{$table_data[table_data].restlizenz}/{$table_data[table_data].anz_lizenzen}</td>
-										<td class="d-none d-md-table-cell">{$table_data[table_data].streamlizenz_vorh}</td>
+										<td class="d-none d-xl-table-cell">{$table_data[table_data].streamlizenz_vorh}</td>
 										<td> <a href="notenupload.php?editjndid={$table_data[table_data].jndid}" class="settings" title="Edit Member" data-toggle="tooltip"><i class="fas fa fa-edit"></i></a> {if $admin_rolle == 1} &nbsp; <a class="btn btn-danger  btn-rounded btn-icon btn-sm" onclick="delNoten({$table_data[table_data].jndid})"><i class="fa fa-trash" style="width:10px;"></i></a> {/if} </td>
 									</tr> {/section} </tbody>
 							</table>
